@@ -10,8 +10,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "mobx": "^6.6.0",
+    "mobx-react": "^7.5.0",
     "react": "17.0.2",
-    "react-native": "0.68.2"
+    "react-native": "0.68.2",
+    "react-native-bouncy-checkbox": "^2.1.10"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -20,6 +23,7 @@
     "@types/react": "^18.0.12",
     "@types/react-native": "^0.67.8",
     "babel-jest": "^26.6.3",
+    "babel-plugin-module-resolver": "^4.1.0",
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.67.0",
