@@ -1,13 +1,11 @@
 import {
   IsEmail,
   IsNotEmpty,
-  IsPhoneNumber,
   IsString,
   Matches,
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { GenderType } from '../user.type';
 
 export class UserSignInDto {
   @IsNotEmpty()

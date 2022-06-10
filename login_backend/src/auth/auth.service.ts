@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,6 +15,7 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
+  private logger = new Logger('AuthController');
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
@@ -33,8 +35,12 @@ export class AuthService {
     });
     try {
       await this.userRepository.save(user);
+      this.logger.verbose(`회원가입 성공: ${JSON.stringify(userSignUpDto)}`);
     } catch (err) {
-      if (err.code === '23505') {
+      if (err.code === 'ER_DUP_ENTRY') {
+        this.logger.verbose(
+          `회원가입 실패: 이미 존재하는 계정 ${JSON.stringify(userSignUpDto)}`,
+        );
         throw new ConflictException('Exist Account');
       } else {
         throw new InternalServerErrorException();
@@ -49,6 +55,7 @@ export class AuthService {
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload = { email };
       const accessToken = await this.jwtService.sign(payload);
+      this.logger.verbose(`로그인 성공: 유저 정보 ${JSON.stringify(user)}`);
       return { accessToken };
     } else {
       throw new UnauthorizedException('login Failed');
