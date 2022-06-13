@@ -3,9 +3,9 @@ import React from 'react';
 import {observable} from 'mobx';
 
 const SignUpStore = observable({
-  id: '',
-  setId(id: string) {
-    this.id = id;
+  userId: '',
+  setUserId(id: string) {
+    this.userId = id;
   },
   email: '',
   setEmail(email: string) {

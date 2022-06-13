@@ -6,7 +6,7 @@ import {styles} from './styles';
 
 const SignUpInput: FC = () => {
   const {
-    setId,
+    setUserId,
     setEmail,
     setUsername,
     setPhoneNumber,
@@ -15,9 +15,9 @@ const SignUpInput: FC = () => {
   } = SignUpStore;
   const onChangeId = useCallback(
     (text: string) => {
-      setId(text);
+      setUserId(text);
     },
-    [setId],
+    [setUserId],
   );
   const onChangeEmail = useCallback(
     (text: string) => {
