@@ -9,24 +9,12 @@ import {styles} from './styles';
 const LoginBox: FC = () => {
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flex: 1.5,
-          alignSelf: 'center',
-          justifyContent: 'center',
-        }}>
-        <View
-          style={{
-            width: 100,
-            height: 100,
-            borderWidth: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+      <View style={styles.logoContainer}>
+        <View style={styles.logo}>
           <Text>로고</Text>
         </View>
       </View>
-      <View style={{flex: 2}}>
+      <View style={styles.contentContainer}>
         <LoginInput />
         <LoginButton />
         <FooterButton />

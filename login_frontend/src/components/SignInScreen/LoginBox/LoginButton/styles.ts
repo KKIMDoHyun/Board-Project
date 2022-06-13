@@ -4,8 +4,16 @@ export const styles = StyleSheet.create({
   container: {
     marginTop: 10,
   },
-  autoLoginBtn: {
-    alignItems: 'flex-end',
+  signUpAndAutoLoginBtn: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  signUpText: {
+    color: '#7a7974',
+    fontSize: 15,
+    fontWeight: '500',
   },
   autoLoginBtnText: {
     color: '#000000',
