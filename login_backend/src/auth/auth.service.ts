@@ -12,6 +12,7 @@ import { UserSignInDto } from './dto/user-signIn.dto';
 import { User } from './entity/user.entity';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
+import { UserIdDto } from './dto/user-id.dto';
 
 @Injectable()
 export class AuthService {
@@ -61,6 +62,16 @@ export class AuthService {
       return { accessToken };
     } else {
       throw new UnauthorizedException('login Failed');
+    }
+  }
+
+  async redundancyCheckByUserId(userIdDto: UserIdDto): Promise<boolean> {
+    const { userId } = userIdDto;
+    const user = await this.userRepository.findOne({ userId });
+    if (!user) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

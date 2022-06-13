@@ -14,6 +14,7 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './get-user.decorator';
 import { User } from './entity/user.entity';
+import { UserIdDto } from './dto/user-id.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -30,6 +31,13 @@ export class AuthController {
     @Body(ValidationPipe) userSignInDto: UserSignInDto,
   ): Promise<{ accessToken: string }> {
     return this.authService.signIn(userSignInDto);
+  }
+
+  @Get('/idRedundancyCheck')
+  redundancyCheckByUserId(
+    @Body(ValidationPipe) userIdDto: UserIdDto,
+  ): Promise<boolean> {
+    return this.authService.redundancyCheckByUserId(userIdDto);
   }
 
   @Get('/test')
