@@ -32,7 +32,7 @@ export class AuthController {
     return this.authService.signIn(userSignInDto);
   }
 
-  @Post('/test')
+  @Get('/test')
   @UseGuards(AuthGuard())
   test(@GetUser() user: User) {
     console.log('user', user);

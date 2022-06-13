@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 import * as config from 'config';
 
 const dbConfig = config.get('db');
@@ -18,6 +19,7 @@ const dbConfig = config.get('db');
       synchronize: dbConfig.synchronize,
     }),
     UsersModule,
+    UserModule,
   ],
 })
 export class AppModule {}
