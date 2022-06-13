@@ -12,9 +12,9 @@ export class UserService {
   ) {}
 
   async getUserInfo(user: User): Promise<{}> {
-    //   return user;
-    const { email, username, phoneNumber, gender } = user;
+    const { userId, email, username, phoneNumber, gender } = user;
     const userInfo = {
+      userId,
       email,
       username,
       phoneNumber,

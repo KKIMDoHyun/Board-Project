@@ -23,10 +23,12 @@ export class AuthService {
   ) {}
 
   async signUp(userSignUpDto: UserSignUpDto): Promise<void> {
-    const { email, username, gender, phoneNumber, password } = userSignUpDto;
+    const { userId, email, username, gender, phoneNumber, password } =
+      userSignUpDto;
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
     const user = this.userRepository.create({
+      userId,
       email,
       username,
       gender,
@@ -49,11 +51,11 @@ export class AuthService {
   }
 
   async signIn(userSignInDto: UserSignInDto): Promise<{ accessToken: string }> {
-    const { email, password } = userSignInDto;
-    const user = await this.userRepository.findOne({ email });
+    const { userId, password } = userSignInDto;
+    const user = await this.userRepository.findOne({ userId });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      const payload = { email };
+      const payload = { userId };
       const accessToken = await this.jwtService.sign(payload);
       this.logger.verbose(`로그인 성공: 유저 정보 ${JSON.stringify(user)}`);
       return { accessToken };

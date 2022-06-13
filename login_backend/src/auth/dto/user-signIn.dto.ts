@@ -1,5 +1,4 @@
 import {
-  IsEmail,
   IsNotEmpty,
   IsString,
   Matches,
@@ -9,8 +8,7 @@ import {
 
 export class UserSignInDto {
   @IsNotEmpty()
-  @IsEmail()
-  readonly email: string;
+  readonly userId: string;
 
   @IsNotEmpty()
   @IsString()

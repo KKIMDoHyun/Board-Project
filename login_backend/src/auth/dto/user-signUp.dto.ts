@@ -11,6 +11,9 @@ import { GenderType } from '../user.type';
 
 export class UserSignUpDto {
   @IsNotEmpty()
+  readonly userId: string;
+
+  @IsNotEmpty()
   @IsEmail()
   readonly email: string;
 
