@@ -50,6 +50,10 @@ export class AuthService {
       }
     }
   }
+  // async findUser(userIdDto: UserIdDto): Promise<User | undefined> {
+  //   const { userId } = userIdDto;
+  //   return this.userRepository.findOne({ userId });
+  // }
 
   async signIn(userSignInDto: UserSignInDto): Promise<{ accessToken: string }> {
     const { userId, password } = userSignInDto;
@@ -63,6 +67,23 @@ export class AuthService {
     } else {
       throw new UnauthorizedException('login Failed');
     }
+  }
+
+  async getUserIfRefreshTokenMatches(
+    refreshToken: string,
+    userIdDto: UserIdDto,
+  ): Promise<User | undefined> {
+    const { userId } = userIdDto;
+    const user = await this.userRepository.findOne({ userId });
+    const isRefreshTokenMatching = await bcrypt.compare(
+      refreshToken,
+      user.currentHashedRefreshToken as string,
+    );
+
+    if (isRefreshTokenMatching) {
+      return user;
+    }
+    return;
   }
 
   async redundancyCheckByUserId(userIdDto: UserIdDto): Promise<boolean> {

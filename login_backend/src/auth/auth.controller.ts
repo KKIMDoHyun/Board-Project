@@ -40,9 +40,14 @@ export class AuthController {
     return this.authService.redundancyCheckByUserId(userIdDto);
   }
 
-  @Get('/test')
-  @UseGuards(AuthGuard())
-  test(@GetUser() user: User) {
-    console.log('user', user);
+  // @Get('/test')
+  // @UseGuards(AuthGuard())
+  // test(@GetUser() user: User) {
+  //   console.log('user', user);
+  // }
+
+  @Get()
+  test() {
+    return 'hello';
   }
 }

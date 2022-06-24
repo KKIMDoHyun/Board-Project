@@ -1,8 +1,9 @@
 import React from 'react';
 
 import {observable} from 'mobx';
+import {GenderType, SignUpStoreType} from './types/SignUpStore.type';
 
-const SignUpStore = observable({
+const SignUpStore: SignUpStoreType = observable({
   userId: '',
   setUserId(id: string) {
     this.userId = id;
@@ -14,6 +15,10 @@ const SignUpStore = observable({
   username: '',
   setUsername(username: string) {
     this.username = username;
+  },
+  gender: 'MALE',
+  setGender(gender: GenderType) {
+    this.gender = gender;
   },
   phoneNumber: '',
   setPhoneNumber(phoneNumber: string) {

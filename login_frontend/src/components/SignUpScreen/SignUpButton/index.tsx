@@ -7,9 +7,9 @@ import axios from 'axios';
 const SignUpButton: FC = () => {
   const {userId, email, username, phoneNumber, password} = SignUpStore;
   const user = {
-    userId: 'kdh412',
-    email: 'kdh@test.com',
-    username: 'test',
+    userId: 'test1',
+    email: 'test1@test.com',
+    username: 'test1',
     phoneNumber: '01023458252',
     gender: 'MALE',
     password: '1234',

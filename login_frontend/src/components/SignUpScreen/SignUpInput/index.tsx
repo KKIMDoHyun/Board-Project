@@ -5,14 +5,17 @@ import {Dimensions, Pressable, Text, TextInput, View} from 'react-native';
 import {styles} from './styles';
 
 const SignUpInput: FC = () => {
+  const [genderChecked, setGenderChecked] = React.useState(false);
   const {
     setUserId,
     setEmail,
     setUsername,
+    setGender,
     setPhoneNumber,
     setPassword,
     setCheckPassword,
   } = SignUpStore;
+
   const onChangeId = useCallback(
     (text: string) => {
       setUserId(text);
@@ -91,6 +94,36 @@ const SignUpInput: FC = () => {
           }}
           placeholder="이름을 입력하세요."
         />
+      </View>
+      <View style={styles.lineContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>성별</Text>
+        </View>
+        {/*  */}
+        <Pressable>
+          <View style={{flexDirection: 'row', marginRight: 30}}>
+            <View
+              style={{
+                width: 20,
+                height: 20,
+                borderWidth: 1,
+                borderRadius: 80,
+              }}></View>
+            <Text style={{marginLeft: 10}}>남자</Text>
+          </View>
+        </Pressable>
+        <Pressable>
+          <View style={{flexDirection: 'row'}}>
+            <View
+              style={{
+                width: 20,
+                height: 20,
+                borderWidth: 1,
+                borderRadius: 80,
+              }}></View>
+            <Text style={{marginLeft: 10}}>여자</Text>
+          </View>
+        </Pressable>
       </View>
       <View style={styles.lineContainer}>
         <View style={styles.titleContainer}>

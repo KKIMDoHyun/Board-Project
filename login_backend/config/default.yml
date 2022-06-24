@@ -7,4 +7,5 @@ db:
   database: 'login'
 
 jwt:
-  expiresIn: 3600
+  accessToken_expiresIn: 900
+  refreshToken_expiresIn: 604800

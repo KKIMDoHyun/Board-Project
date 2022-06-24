@@ -7,7 +7,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { GenderType } from '../user.type';
+import { GenderType } from '../type/user.type';
 
 export class UserSignUpDto {
   @IsNotEmpty()
