@@ -13,6 +13,7 @@ import { User } from './entity/user.entity';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { UserIdDto } from './dto/user-id.dto';
+import { UserInfoDto } from './dto/user-info.dto';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +24,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signUp(userSignUpDto: UserSignUpDto): Promise<void> {
+  async signUp(userSignUpDto: UserSignUpDto): Promise<User> {
     const { userId, email, username, gender, phoneNumber, password } =
       userSignUpDto;
     const salt = await bcrypt.genSalt();
@@ -39,6 +40,7 @@ export class AuthService {
     try {
       await this.userRepository.save(user);
       this.logger.verbose(`회원가입 성공: ${JSON.stringify(userSignUpDto)}`);
+      return user;
     } catch (err) {
       if (err.code === 'ER_DUP_ENTRY') {
         this.logger.verbose(
@@ -50,22 +52,34 @@ export class AuthService {
       }
     }
   }
-  // async findUser(userIdDto: UserIdDto): Promise<User | undefined> {
-  //   const { userId } = userIdDto;
-  //   return this.userRepository.findOne({ userId });
-  // }
 
-  async signIn(userSignInDto: UserSignInDto): Promise<{ accessToken: string }> {
+  async validateUser(userSignInDto: UserSignInDto): Promise<UserInfoDto> {
     const { userId, password } = userSignInDto;
     const user = await this.userRepository.findOne({ userId });
-
     if (user && (await bcrypt.compare(password, user.password))) {
-      const payload = { userId };
-      const accessToken = await this.jwtService.sign(payload);
-      this.logger.verbose(`로그인 성공: 유저 정보 ${JSON.stringify(user)}`);
-      return { accessToken };
+      const { password, ...result } = user;
+      console.log(result);
+      return result;
+    }
+    return null;
+  }
+
+  async signIn(userSignInDto: UserSignInDto): Promise<{ accessToken: string }> {
+    const payload = { userId: userSignInDto.userId };
+    return {
+      accessToken: this.jwtService.sign(payload),
+    };
+  }
+
+  async getProfile(userIdDto: UserIdDto): Promise<UserInfoDto> {
+    const { userId } = userIdDto;
+    const user = await this.userRepository.findOne({ userId });
+    if (user) {
+      const { password, currentHashedRefreshToken, ...result } = user;
+      console.log(result);
+      return result;
     } else {
-      throw new UnauthorizedException('login Failed');
+      return null;
     }
   }
 

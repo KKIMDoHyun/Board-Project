@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
+import { GenderType } from '../type/user.type';
 
 @Entity()
 @Unique(['userId'])
@@ -26,7 +27,7 @@ export class User extends BaseEntity {
   phoneNumber: string;
 
   @Column()
-  gender: string;
+  gender: GenderType;
 
   @Column()
   password: string;

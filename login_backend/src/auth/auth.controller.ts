@@ -5,6 +5,7 @@ import {
   HttpCode,
   Logger,
   Post,
+  Request,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -15,6 +16,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './get-user.decorator';
 import { User } from './entity/user.entity';
 import { UserIdDto } from './dto/user-id.dto';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -22,32 +25,26 @@ export class AuthController {
 
   @Post('/signup')
   @HttpCode(201)
-  signUp(@Body(ValidationPipe) userSignUpDto: UserSignUpDto): Promise<void> {
+  signUp(@Body() userSignUpDto: UserSignUpDto): Promise<User> {
     return this.authService.signUp(userSignUpDto);
   }
 
+  @UseGuards(LocalAuthGuard)
   @Post('/signin')
   signIn(
-    @Body(ValidationPipe) userSignInDto: UserSignInDto,
+    @Body() userSignInDto: UserSignInDto,
   ): Promise<{ accessToken: string }> {
     return this.authService.signIn(userSignInDto);
   }
 
   @Get('/idRedundancyCheck')
-  redundancyCheckByUserId(
-    @Body(ValidationPipe) userIdDto: UserIdDto,
-  ): Promise<boolean> {
+  redundancyCheckByUserId(@Body() userIdDto: UserIdDto): Promise<boolean> {
     return this.authService.redundancyCheckByUserId(userIdDto);
   }
 
-  // @Get('/test')
-  // @UseGuards(AuthGuard())
-  // test(@GetUser() user: User) {
-  //   console.log('user', user);
-  // }
-
-  @Get()
-  test() {
-    return 'hello';
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Body() userIdDto: UserIdDto) {
+    return this.authService.getProfile(userIdDto);
   }
 }

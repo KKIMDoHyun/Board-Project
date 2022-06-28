@@ -4,8 +4,8 @@ server:
 db:
   type: 'mysql'
   port: 3306
-  database: 'login'
+  database: 'project'
 
 jwt:
-  accessToken_expiresIn: 900
+  accessToken_expiresIn: 360
   refreshToken_expiresIn: 604800

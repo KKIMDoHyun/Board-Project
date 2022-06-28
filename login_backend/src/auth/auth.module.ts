@@ -5,8 +5,9 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './jwt.strategy';
+import { JwtStrategy } from './strategies/jwt.strategy';
 import * as config from 'config';
+import { LocalStrategy } from './strategies/local.strategy';
 
 const jwtConfig = config.get('jwt');
 @Module({
@@ -21,7 +22,7 @@ const jwtConfig = config.get('jwt');
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
-  exports: [JwtStrategy, PassportModule],
+  providers: [AuthService, JwtStrategy, LocalStrategy],
+  exports: [JwtStrategy, PassportModule, AuthService],
 })
 export class UsersModule {}
