@@ -5,7 +5,9 @@ import {
   HttpCode,
   Logger,
   Post,
+  Req,
   Request,
+  Res,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -18,9 +20,11 @@ import { User } from './entity/user.entity';
 import { UserIdDto } from './dto/user-id.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
+  private logger = new Logger('AuthController');
   constructor(private authService: AuthService) {}
 
   @Post('/signup')
@@ -29,12 +33,25 @@ export class AuthController {
     return this.authService.signUp(userSignUpDto);
   }
 
+  // @UseGuards(LocalAuthGuard)
+  // @Post('/signin')
+  // async signIn(
+  //   @Body() userSignInDto: UserSignInDto,
+  // ): Promise<{ accessToken: string }> {
+  //   return await this.authService.signIn(userSignInDto);
+  // }
   @UseGuards(LocalAuthGuard)
   @Post('/signin')
-  signIn(
-    @Body() userSignInDto: UserSignInDto,
-  ): Promise<{ accessToken: string }> {
-    return this.authService.signIn(userSignInDto);
+  async signIn(@Req() req, @Res({ passthrough: true }) res: Response) {
+    const { accessToken, ...option } = await this.authService.signIn(req);
+    res.cookie('Authentication', accessToken, option);
+    this.logger.verbose(`로그인 성공: ${accessToken}`);
+  }
+
+  @Post('/logout')
+  async logout(@Res({ passthrough: true }) res: Response) {
+    const { token, ...option } = await this.authService.logout();
+    res.cookie('Authentication', token, option);
   }
 
   @Get('/idRedundancyCheck')

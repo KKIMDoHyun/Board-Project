@@ -7,10 +7,4 @@ import { UserService } from './user.service';
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
-
-  @Get()
-  @UseGuards(AuthGuard())
-  getUserInfo(@GetUser() user: User): Promise<{}> {
-    return this.userService.getUserInfo(user);
-  }
 }

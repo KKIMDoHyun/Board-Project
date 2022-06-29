@@ -1,5 +1,7 @@
 import {
   ConflictException,
+  HttpException,
+  HttpStatus,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -14,6 +16,7 @@ import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { UserIdDto } from './dto/user-id.dto';
 import { UserInfoDto } from './dto/user-info.dto';
+import * as config from 'config';
 
 @Injectable()
 export class AuthService {
@@ -60,14 +63,88 @@ export class AuthService {
       const { password, ...result } = user;
       console.log(result);
       return result;
+    } else {
+      throw new HttpException(
+        'Wrong credentials provided',
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    return null;
   }
 
-  async signIn(userSignInDto: UserSignInDto): Promise<{ accessToken: string }> {
+  // async signIn(userSignInDto: UserSignInDto): Promise<{ accessToken: string }> {
+  //   const payload = { userId: userSignInDto.userId };
+  //   return {
+  //     accessToken: this.jwtService.sign(payload),
+  //   };
+  // }
+  async signIn(userSignInDto: UserSignInDto) {
     const payload = { userId: userSignInDto.userId };
     return {
       accessToken: this.jwtService.sign(payload),
+      domain: 'localhost',
+      path: '/',
+      httpOnly: true,
+      maxAge: Number(config.get('jwt').accessToken_expiresIn) * 1000,
+    };
+  }
+
+  /*
+   * AccessToken, RefreshToken 발급
+   * 생성된 토큰을 Cookie정보와 함께 반환
+   */
+  getCookieWithJwtAccessToken(id: number) {
+    const payload = { id };
+    const token = this.jwtService.sign(payload, {
+      secret: config.get('jwt.accessToken_secret'),
+      expiresIn: config.get('jwt').accessToken_expiresIn,
+    });
+    return {
+      accessToken: token,
+      domain: 'localhost',
+      path: '/',
+      httpOnly: true,
+      maxAge: Number(config.get('jwt').accessToken_expiresIn) * 1000,
+    };
+  }
+  getCookieWithJwtRefreshToken(id: number) {
+    const payload = { id };
+    const token = this.jwtService.sign(payload, {
+      secret: config.get('jwt.refreshToken_secret'),
+      expiresIn: config.get('jwt').refreshToken_expiresIn,
+    });
+    return {
+      refreshToken: token,
+      domain: 'localhost',
+      path: '/',
+      httpOnly: true,
+      maxAge: Number(config.get('jwt').refreshToken_expiresIn) * 1000,
+    };
+  }
+
+  async setCurrentRefreshToken(refreshToken: string, id: number) {
+    const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    await this.userRepository.update(id, { currentHashedRefreshToken });
+  }
+
+  async removeRefreshToken(id: number) {
+    return this.userRepository.update(id, {
+      currentHashedRefreshToken: null,
+    });
+  }
+  getCookiesForLogOut() {
+    return {
+      accessOption: {
+        domain: 'localhost',
+        path: '/',
+        httpOnly: true,
+        maxAge: 0,
+      },
+      refreshOption: {
+        domain: 'localhost',
+        path: '/',
+        httpOnly: true,
+        maxAge: 0,
+      },
     };
   }
 
@@ -91,7 +168,7 @@ export class AuthService {
     const user = await this.userRepository.findOne({ userId });
     const isRefreshTokenMatching = await bcrypt.compare(
       refreshToken,
-      user.currentHashedRefreshToken as string,
+      user.currentHashedRefreshToken,
     );
 
     if (isRefreshTokenMatching) {
@@ -108,5 +185,15 @@ export class AuthService {
     } else {
       return false;
     }
+  }
+
+  async logout() {
+    return {
+      token: '',
+      domain: 'localhost',
+      path: '/',
+      httpOnly: true,
+      maxAge: 0,
+    };
   }
 }

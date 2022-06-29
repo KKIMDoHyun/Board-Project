@@ -10,17 +10,4 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) {}
-
-  async getUserInfo(user: User): Promise<{}> {
-    const { userId, email, username, phoneNumber, gender } = user;
-    const userInfo = {
-      userId,
-      email,
-      username,
-      phoneNumber,
-      gender,
-    };
-    this.logger.verbose(`(getUserInfo) ${JSON.stringify(userInfo)}`);
-    return userInfo;
-  }
 }

@@ -6,3 +6,4 @@ db:
 
 jwt:
   accessToken_secret: 'accesssecret'
+  refreshToken_secret: 'refreshsecret'

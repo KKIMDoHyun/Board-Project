@@ -5,6 +5,8 @@ import { UserModule } from './user/user.module';
 import * as config from 'config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 const dbConfig = config.get('db');
 
@@ -24,6 +26,7 @@ const dbConfig = config.get('db');
     UserModule,
   ],
   controllers: [AppController],
+  // providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],
   providers: [AppService],
 })
 export class AppModule {}
