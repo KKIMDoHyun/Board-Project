@@ -27,6 +27,9 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  /*
+   * 회원가입
+   */
   async signUp(userSignUpDto: UserSignUpDto): Promise<User> {
     const { userId, email, username, gender, phoneNumber, password } =
       userSignUpDto;
@@ -56,12 +59,17 @@ export class AuthService {
     }
   }
 
+  /*
+   * 로그인
+   * validateUser: 유저 유무 확인 및 PW 비교
+   * getCookieWithJwtAccessToken : accessToken 발급, 쿠키와 함께 반환
+   * getCookieWithJwtRefreshToken : refreshToken 발급, 쿠키와 함께 반환
+   */
   async validateUser(userSignInDto: UserSignInDto): Promise<UserInfoDto> {
     const { userId, password } = userSignInDto;
     const user = await this.userRepository.findOne({ userId });
     if (user && (await bcrypt.compare(password, user.password))) {
       const { password, ...result } = user;
-      console.log(result);
       return result;
     } else {
       throw new HttpException(
@@ -70,28 +78,6 @@ export class AuthService {
       );
     }
   }
-
-  // async signIn(userSignInDto: UserSignInDto): Promise<{ accessToken: string }> {
-  //   const payload = { userId: userSignInDto.userId };
-  //   return {
-  //     accessToken: this.jwtService.sign(payload),
-  //   };
-  // }
-  async signIn(userSignInDto: UserSignInDto) {
-    const payload = { userId: userSignInDto.userId };
-    return {
-      accessToken: this.jwtService.sign(payload),
-      domain: 'localhost',
-      path: '/',
-      httpOnly: true,
-      maxAge: Number(config.get('jwt').accessToken_expiresIn) * 1000,
-    };
-  }
-
-  /*
-   * AccessToken, RefreshToken 발급
-   * 생성된 토큰을 Cookie정보와 함께 반환
-   */
   getCookieWithJwtAccessToken(id: number) {
     const payload = { id };
     const token = this.jwtService.sign(payload, {
@@ -121,16 +107,9 @@ export class AuthService {
     };
   }
 
-  async setCurrentRefreshToken(refreshToken: string, id: number) {
-    const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
-    await this.userRepository.update(id, { currentHashedRefreshToken });
-  }
-
-  async removeRefreshToken(id: number) {
-    return this.userRepository.update(id, {
-      currentHashedRefreshToken: null,
-    });
-  }
+  /*
+   * 로그아웃
+   */
   getCookiesForLogOut() {
     return {
       accessOption: {
@@ -160,6 +139,11 @@ export class AuthService {
     }
   }
 
+  async setCurrentRefreshToken(refreshToken: string, id: number) {
+    const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    await this.userRepository.update(id, { currentHashedRefreshToken });
+  }
+
   async getUserIfRefreshTokenMatches(
     refreshToken: string,
     userIdDto: UserIdDto,
@@ -175,6 +159,11 @@ export class AuthService {
       return user;
     }
     return;
+  }
+  async removeRefreshToken(id: number) {
+    return this.userRepository.update(id, {
+      currentHashedRefreshToken: null,
+    });
   }
 
   async redundancyCheckByUserId(userIdDto: UserIdDto): Promise<boolean> {

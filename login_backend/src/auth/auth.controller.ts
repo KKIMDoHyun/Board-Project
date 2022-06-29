@@ -33,25 +33,37 @@ export class AuthController {
     return this.authService.signUp(userSignUpDto);
   }
 
-  // @UseGuards(LocalAuthGuard)
-  // @Post('/signin')
-  // async signIn(
-  //   @Body() userSignInDto: UserSignInDto,
-  // ): Promise<{ accessToken: string }> {
-  //   return await this.authService.signIn(userSignInDto);
-  // }
   @UseGuards(LocalAuthGuard)
   @Post('/signin')
   async signIn(@Req() req, @Res({ passthrough: true }) res: Response) {
-    const { accessToken, ...option } = await this.authService.signIn(req);
-    res.cookie('Authentication', accessToken, option);
-    this.logger.verbose(`로그인 성공: ${accessToken}`);
+    const user = req.user;
+    console.log(user);
+    const { accessToken, ...accessOption } =
+      this.authService.getCookieWithJwtAccessToken(user.id);
+    const { refreshToken, ...refreshOption } =
+      this.authService.getCookieWithJwtRefreshToken(user.id);
+
+    await this.authService.setCurrentRefreshToken(refreshToken, user.id);
+
+    res.cookie('Authentication', accessToken, accessOption);
+    res.cookie('Refresh', refreshToken, refreshOption);
+
+    this.logger.verbose(
+      `로그인 성공: [accessToken]: ${accessToken}, [refreshToken]: ${refreshToken}`,
+    );
+    return user;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('/logout')
-  async logout(@Res({ passthrough: true }) res: Response) {
-    const { token, ...option } = await this.authService.logout();
-    res.cookie('Authentication', token, option);
+  async logout(@Req() req, @Res({ passthrough: true }) res: Response) {
+    const { accessOption, refreshOption } =
+      this.authService.getCookiesForLogOut();
+    await this.authService.removeRefreshToken(req.user.id);
+
+    res.cookie('Authentication', '', accessOption);
+    res.cookie('Refresh', '', refreshOption);
+    this.logger.verbose(`로그아웃 성공`);
   }
 
   @Get('/idRedundancyCheck')
