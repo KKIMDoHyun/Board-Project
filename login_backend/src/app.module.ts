@@ -26,7 +26,7 @@ const dbConfig = config.get('db');
     UserModule,
   ],
   controllers: [AppController],
-  // providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],
+  // providers: [AppService],
 })
 export class AppModule {}

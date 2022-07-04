@@ -146,20 +146,20 @@ export class AuthService {
 
   async getUserIfRefreshTokenMatches(
     refreshToken: string,
-    userIdDto: UserIdDto,
+    id: number,
   ): Promise<User | undefined> {
-    const { userId } = userIdDto;
-    const user = await this.userRepository.findOne({ userId });
+    const user = await this.userRepository.findOne({ id });
     const isRefreshTokenMatching = await bcrypt.compare(
       refreshToken,
       user.currentHashedRefreshToken,
     );
-
+    console.log(isRefreshTokenMatching);
     if (isRefreshTokenMatching) {
       return user;
     }
     return;
   }
+
   async removeRefreshToken(id: number) {
     return this.userRepository.update(id, {
       currentHashedRefreshToken: null,

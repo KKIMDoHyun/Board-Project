@@ -15,24 +15,27 @@ import { UserSignUpDto } from './dto/user-signUp.dto';
 import { UserSignInDto } from './dto/user-signIn.dto';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from './get-user.decorator';
 import { User } from './entity/user.entity';
 import { UserIdDto } from './dto/user-id.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { Response } from 'express';
+import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
+import { Public } from './decorators/public-decorator';
 
 @Controller('auth')
 export class AuthController {
   private logger = new Logger('AuthController');
   constructor(private authService: AuthService) {}
 
+  @Public()
   @Post('/signup')
   @HttpCode(201)
   signUp(@Body() userSignUpDto: UserSignUpDto): Promise<User> {
     return this.authService.signUp(userSignUpDto);
   }
 
+  @Public()
   @UseGuards(LocalAuthGuard)
   @Post('/signin')
   async signIn(@Req() req, @Res({ passthrough: true }) res: Response) {
@@ -54,6 +57,29 @@ export class AuthController {
     return user;
   }
 
+  @Public()
+  @Get('/idRedundancyCheck')
+  redundancyCheckByUserId(@Body() userIdDto: UserIdDto): Promise<boolean> {
+    return this.authService.redundancyCheckByUserId(userIdDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Body() userIdDto: UserIdDto) {
+    return this.authService.getProfile(userIdDto);
+  }
+
+  @UseGuards(JwtRefreshGuard)
+  @Get('refresh')
+  refresh(@Req() req, @Res({ passthrough: true }) res: Response) {
+    const user = req.user;
+    console.log('DD', user);
+    const { accessToken, ...accessOption } =
+      this.authService.getCookieWithJwtAccessToken(user.id);
+    res.cookie('Authentication', accessToken, accessOption);
+    return user;
+  }
+
   @UseGuards(JwtAuthGuard)
   @Post('/logout')
   async logout(@Req() req, @Res({ passthrough: true }) res: Response) {
@@ -64,16 +90,5 @@ export class AuthController {
     res.cookie('Authentication', '', accessOption);
     res.cookie('Refresh', '', refreshOption);
     this.logger.verbose(`로그아웃 성공`);
-  }
-
-  @Get('/idRedundancyCheck')
-  redundancyCheckByUserId(@Body() userIdDto: UserIdDto): Promise<boolean> {
-    return this.authService.redundancyCheckByUserId(userIdDto);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@Body() userIdDto: UserIdDto) {
-    return this.authService.getProfile(userIdDto);
   }
 }
