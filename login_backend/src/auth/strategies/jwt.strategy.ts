@@ -10,6 +10,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Repository } from 'typeorm';
 import { User } from '../entity/user.entity';
 import * as config from 'config';
+import { Request } from 'express';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
@@ -18,18 +19,14 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     private userRepository: Repository<User>,
   ) {
     super({
-      secretOrKey: config.get('jwt.accessToken_secret'),
-      ignoreExpiration: false,
-      // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       jwtFromRequest: ExtractJwt.fromExtractors([
-        (request) => {
-          if (request.cookies.Authentication) {
-            return request?.cookies?.Authentication;
-          } else {
-            throw new UnauthorizedException();
-          }
+        (request: Request) => {
+          console.log(request.headers);
+          return request?.cookies?.Authentication;
         },
       ]),
+      ignoreExpiration: false,
+      secretOrKey: config.get('jwt.accessToken_secret'),
     });
   }
 

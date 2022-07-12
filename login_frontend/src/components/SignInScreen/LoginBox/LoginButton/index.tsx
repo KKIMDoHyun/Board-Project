@@ -5,6 +5,8 @@ import {styles} from './styles';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import LoginStore from '@/stores/LoginStore';
 import {useNavigation} from '@react-navigation/native';
+import {signIn, test} from '@/utils/api/auth';
+import instance from '@/utils/axios';
 
 const LoginButton: FC = () => {
   const navigation = useNavigation();
@@ -29,7 +31,35 @@ const LoginButton: FC = () => {
         />
       </View>
       <View style={styles.loginBtn}>
-        <Pressable>
+        <Pressable
+          onPress={() => {
+            const user = {
+              userId: 'test4',
+              password: '1234',
+            };
+            signIn(user)
+              .then(res => {
+                if (res.status === 201) {
+                  const cookie = res.headers['set-cookie'];
+                  LoginStore.setCookie(cookie[0]);
+                  navigation.navigate('Home');
+                }
+              })
+              .catch(err => console.log(err));
+            // instance
+            //   .post('/auth/signin', {
+            //     userId: 'test4',
+            //     password: '1234',
+            //   })
+            //   .then(res => {
+            //     if (res.status === 201) {
+            //       const cookie = res.headers['set-cookie'];
+            //       LoginStore.setCookie(cookie[0]);
+            //       navigation.navigate('Home');
+            //     }
+            //   })
+            //   .catch(err => console.log(err));
+          }}>
           <Text style={styles.loginBtnText}>로그인</Text>
         </Pressable>
       </View>

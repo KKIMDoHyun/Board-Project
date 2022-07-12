@@ -127,12 +127,10 @@ export class AuthService {
     };
   }
 
-  async getProfile(userIdDto: UserIdDto): Promise<UserInfoDto> {
-    const { userId } = userIdDto;
+  async getProfile(userId: string): Promise<UserInfoDto> {
     const user = await this.userRepository.findOne({ userId });
     if (user) {
       const { password, currentHashedRefreshToken, ...result } = user;
-      console.log(result);
       return result;
     } else {
       return null;
@@ -153,7 +151,6 @@ export class AuthService {
       refreshToken,
       user.currentHashedRefreshToken,
     );
-    console.log(isRefreshTokenMatching);
     if (isRefreshTokenMatching) {
       return user;
     }
