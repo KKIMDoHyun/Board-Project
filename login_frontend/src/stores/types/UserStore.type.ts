@@ -1,4 +1,13 @@
-export type SignUpStoreType = {
+export type UserStoreType = {
+  autoLoginToggle: boolean;
+  setAutoLoginToggle: (toggle: boolean) => void;
+
+  accessToken: string;
+  setAccessToken: (token: string) => void;
+
+  refreshToken: string;
+  setRefreshToken: (token: string) => void;
+
   userId: string;
   setUserId: (id: string) => void;
 
@@ -8,7 +17,7 @@ export type SignUpStoreType = {
   username: string;
   setUsername: (username: string) => void;
 
-  gender: GenderType;
+  gender: string;
   setGender: (gender: GenderType) => void;
 
   phoneNumber: string;

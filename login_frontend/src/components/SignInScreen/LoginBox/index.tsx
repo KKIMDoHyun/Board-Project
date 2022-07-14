@@ -1,8 +1,8 @@
 import {observer} from 'mobx-react';
-import React, {FC, useCallback, useState} from 'react';
-import {Text, TextInput, View} from 'react-native';
-import FooterButton from './FooterButton';
+import React, {FC} from 'react';
+import {Text, View} from 'react-native';
 import LoginButton from './LoginButton';
+import MiddleButton from './MiddleButton';
 import LoginInput from './LoginInput';
 import {styles} from './styles';
 
@@ -16,8 +16,8 @@ const LoginBox: FC = () => {
       </View>
       <View style={styles.contentContainer}>
         <LoginInput />
+        <MiddleButton />
         <LoginButton />
-        <FooterButton />
       </View>
     </View>
   );

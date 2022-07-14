@@ -1,7 +1,7 @@
-import SignUpStore from '@/stores/SignUpStore';
+import UserStore from '@/stores/UserStore';
 import {observer} from 'mobx-react';
-import React, {FC, useCallback, useState} from 'react';
-import {Dimensions, Pressable, Text, TextInput, View} from 'react-native';
+import React, {FC, useCallback} from 'react';
+import {Pressable, Text, TextInput, View} from 'react-native';
 import {styles} from './styles';
 
 const SignUpInput: FC = () => {
@@ -14,7 +14,7 @@ const SignUpInput: FC = () => {
     setPhoneNumber,
     setPassword,
     setCheckPassword,
-  } = SignUpStore;
+  } = UserStore;
 
   const onChangeId = useCallback(
     (text: string) => {

@@ -1,41 +1,33 @@
+import UserStore from '@/stores/UserStore';
 import {observer} from 'mobx-react';
-import React, {FC, useCallback, useState} from 'react';
-import {Text, TextInput, View} from 'react-native';
+import React, {FC, useCallback} from 'react';
+import {KeyboardAvoidingView, TextInput} from 'react-native';
 import {styles} from './styles';
 
 const LoginInput: FC = () => {
-  const [email, setEmail] = useState('');
-  const onChangeEmail = useCallback((text: string) => {
-    setEmail(text);
+  const onChangeUserId = useCallback((text: string) => {
+    UserStore.setUserId(text);
+  }, []);
+  const onChangePassword = useCallback((text: string) => {
+    UserStore.setPassword(text);
   }, []);
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
       <TextInput
-        style={{
-          width: '100%',
-          height: 40,
-          borderWidth: 1,
-          padding: 10,
-          marginBottom: 10,
-        }}
+        style={[styles.textContainer, styles.mb10]}
         onChangeText={text => {
-          onChangeEmail(text);
+          onChangeUserId(text);
         }}
-        placeholder="이메일을 입력하세요."
+        placeholder="아이디를 입력하세요."
       />
       <TextInput
-        style={{
-          width: '100%',
-          height: 40,
-          borderWidth: 1,
-          padding: 10,
-        }}
+        style={styles.textContainer}
         onChangeText={text => {
-          onChangeEmail(text);
+          onChangePassword(text);
         }}
         placeholder="비밀번호를 입력하세요."
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

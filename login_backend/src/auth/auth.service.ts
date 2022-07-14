@@ -73,12 +73,12 @@ export class AuthService {
       return result;
     } else {
       throw new HttpException(
-        '아이디와 비밀번호를 잘못입력하셨습니다.',
+        '아이디 또는 비밀번호를 잘못 입력했습니다.',
         HttpStatus.BAD_REQUEST,
       );
     }
   }
-  getCookieWithJwtAccessToken(id: number) {
+  async getJwtAccessToken(id: number) {
     const payload = { id };
     const token = this.jwtService.sign(payload, {
       secret: config.get('jwt.accessToken_secret'),
@@ -88,7 +88,7 @@ export class AuthService {
       accessToken: token,
     };
   }
-  getCookieWithJwtRefreshToken(id: number) {
+  async getJwtRefreshToken(id: number) {
     const payload = { id };
     const token = this.jwtService.sign(payload, {
       secret: config.get('jwt.refreshToken_secret'),
@@ -98,7 +98,14 @@ export class AuthService {
       refreshToken: token,
     };
   }
+  async setCurrentRefreshToken(refreshToken: string, id: number) {
+    const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    await this.userRepository.update(id, { currentHashedRefreshToken });
+  }
 
+  /*
+   * 회원정보 조회하기
+   */
   async getProfile(userId: string): Promise<UserInfoDto> {
     const user = await this.userRepository.findOne({ userId });
     if (user) {
@@ -109,11 +116,6 @@ export class AuthService {
     } else {
       return null;
     }
-  }
-
-  async setCurrentRefreshToken(refreshToken: string, id: number) {
-    const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
-    await this.userRepository.update(id, { currentHashedRefreshToken });
   }
 
   async getUserIfRefreshTokenMatches(
@@ -145,15 +147,5 @@ export class AuthService {
     } else {
       return false;
     }
-  }
-
-  async logout() {
-    return {
-      token: '',
-      domain: 'localhost',
-      path: '/',
-      httpOnly: true,
-      maxAge: 0,
-    };
   }
 }

@@ -1,11 +1,11 @@
-import SignUpStore from '@/stores/SignUpStore';
+import UserStore from '@/stores/UserStore';
 import {observer} from 'mobx-react';
-import React, {FC, useCallback, useState} from 'react';
-import {Dimensions, Pressable, Text, TextInput, View} from 'react-native';
+import React, {FC} from 'react';
+import {Pressable, Text, View} from 'react-native';
 import {styles} from './styles';
 import axios from 'axios';
 const SignUpButton: FC = () => {
-  const {userId, email, username, phoneNumber, password} = SignUpStore;
+  const {userId, email, username, phoneNumber, password} = UserStore;
   const user = {
     userId: 'test442',
     email: 'test1@test.com',

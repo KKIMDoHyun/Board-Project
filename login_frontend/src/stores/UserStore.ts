@@ -1,9 +1,20 @@
-import React from 'react';
-
 import {observable} from 'mobx';
-import {GenderType, SignUpStoreType} from './types/SignUpStore.type';
+import {GenderType, UserStoreType} from './types/UserStore.type';
 
-const SignUpStore: SignUpStoreType = observable({
+const UserStore: UserStoreType = observable({
+  autoLoginToggle: false as boolean,
+  setAutoLoginToggle(toggle: boolean) {
+    this.autoLoginToggle = toggle;
+  },
+  accessToken: '',
+  setAccessToken(token: string) {
+    this.accessToken = token;
+  },
+  refreshToken: '',
+  setRefreshToken(token: string) {
+    this.refreshToken = token;
+  },
+
   userId: '',
   setUserId(id: string) {
     this.userId = id;
@@ -34,4 +45,4 @@ const SignUpStore: SignUpStoreType = observable({
   },
 });
 
-export default SignUpStore;
+export default UserStore;

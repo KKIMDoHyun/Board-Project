@@ -14,7 +14,6 @@ import { AuthService } from './auth.service';
 import { User } from './entity/user.entity';
 import { UserIdDto } from './dto/user-id.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { Response } from 'express';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { Public } from './decorators/public-decorator';
 import { UserInfoDto } from './dto/user-info.dto';
@@ -40,12 +39,8 @@ export class AuthController {
     userInfo: UserInfoDto;
   }> {
     const user = req.user;
-    const { accessToken } = this.authService.getCookieWithJwtAccessToken(
-      user.id,
-    );
-    const { refreshToken } = this.authService.getCookieWithJwtRefreshToken(
-      user.id,
-    );
+    const { accessToken } = await this.authService.getJwtAccessToken(user.id);
+    const { refreshToken } = await this.authService.getJwtRefreshToken(user.id);
     await this.authService.setCurrentRefreshToken(refreshToken, user.id);
     this.logger.verbose(`로그인 성공: ${JSON.stringify(user)}`);
     const { currentHashedRefreshToken, ...userInfo } = user;
@@ -57,24 +52,25 @@ export class AuthController {
   }
 
   @Public()
-  @Get('/idRedundancyCheck')
-  redundancyCheckByUserId(@Body() userIdDto: UserIdDto): Promise<boolean> {
-    return this.authService.redundancyCheckByUserId(userIdDto);
+  @Post('/idRedundancyCheck')
+  async redundancyCheckByUserId(
+    @Body() userIdDto: UserIdDto,
+  ): Promise<boolean> {
+    return await this.authService.redundancyCheckByUserId(userIdDto);
   }
 
   @Get('/profile')
   @HttpCode(201)
-  getProfile(@Req() req) {
-    return this.authService.getProfile(req.user.userId);
+  async getProfile(@Req() req) {
+    return await this.authService.getProfile(req.user.userId);
   }
 
   @Public()
   @UseGuards(JwtRefreshGuard)
   @Post('/refresh')
-  refresh(@Req() req) {
+  async refresh(@Req() req) {
     const user = req.user;
-    const { accessToken, ...accessOption } =
-      this.authService.getCookieWithJwtAccessToken(user.id);
+    const { accessToken } = await this.authService.getJwtAccessToken(user.id);
     return { accessToken: accessToken };
   }
 
@@ -86,11 +82,5 @@ export class AuthController {
     await this.authService.removeRefreshToken(req.user.id);
     this.logger.verbose(`로그아웃 성공`);
     return { accessToken: '', refreshToken: '' };
-  }
-
-  @Public()
-  @Get('/test')
-  async test() {
-    return 'hello';
   }
 }
