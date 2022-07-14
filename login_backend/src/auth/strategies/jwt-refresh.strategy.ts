@@ -21,17 +21,13 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
   ) {
     super({
       secretOrKey: config.get('jwt.refreshToken_secret'),
-      jwtFromRequest: ExtractJwt.fromExtractors([
-        (request) => {
-          return request?.cookies?.Refresh;
-        },
-      ]),
+      jwtFromRequest: ExtractJwt.fromBodyField('refreshToken'),
       passReqToCallback: true,
     });
   }
 
   async validate(req: Request, payload: any) {
-    const refreshToken = req.cookies?.Refresh;
+    const refreshToken = req.body.refreshToken;
     return this.authService.getUserIfRefreshTokenMatches(
       refreshToken,
       payload.id,

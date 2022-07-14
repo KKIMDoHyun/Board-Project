@@ -17,6 +17,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { Response } from 'express';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { Public } from './decorators/public-decorator';
+import { UserInfoDto } from './dto/user-info.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -33,23 +34,26 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('/signin')
-  async signIn(
-    @Req() req,
-    @Res({ passthrough: true }) res: Response,
-  ): Promise<void> {
+  async signIn(@Req() req): Promise<{
+    accessToken: string;
+    refreshToken: string;
+    userInfo: UserInfoDto;
+  }> {
     const user = req.user;
-    const { accessToken, ...accessOption } =
-      this.authService.getCookieWithJwtAccessToken(user.id);
-    const { refreshToken, ...refreshOption } =
-      this.authService.getCookieWithJwtRefreshToken(user.id);
-
-    await this.authService.setCurrentRefreshToken(refreshToken, user.id);
-
-    res.cookie('Authentication', accessToken, accessOption);
-    res.cookie('Refresh', refreshToken, refreshOption);
-    this.logger.verbose(
-      `로그인 성공: [accessToken]: ${accessToken}, [refreshToken]: ${refreshToken}`,
+    const { accessToken } = this.authService.getCookieWithJwtAccessToken(
+      user.id,
     );
+    const { refreshToken } = this.authService.getCookieWithJwtRefreshToken(
+      user.id,
+    );
+    await this.authService.setCurrentRefreshToken(refreshToken, user.id);
+    this.logger.verbose(`로그인 성공: ${JSON.stringify(user)}`);
+    const { currentHashedRefreshToken, ...userInfo } = user;
+    return {
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+      userInfo: userInfo,
+    };
   }
 
   @Public()
@@ -58,34 +62,30 @@ export class AuthController {
     return this.authService.redundancyCheckByUserId(userIdDto);
   }
 
-  @Get('profile')
+  @Get('/profile')
   @HttpCode(201)
   getProfile(@Req() req) {
-    // console.log(req);
     return this.authService.getProfile(req.user.userId);
   }
 
   @Public()
   @UseGuards(JwtRefreshGuard)
-  @Get('refresh')
-  refresh(@Req() req, @Res({ passthrough: true }) res: Response) {
+  @Post('/refresh')
+  refresh(@Req() req) {
     const user = req.user;
     const { accessToken, ...accessOption } =
       this.authService.getCookieWithJwtAccessToken(user.id);
-    res.cookie('Authentication', accessToken, accessOption);
-    return user;
+    return { accessToken: accessToken };
   }
 
   @Post('/logout')
   @HttpCode(201)
-  async logout(@Req() req, @Res({ passthrough: true }) res: Response) {
-    const { accessOption, refreshOption } =
-      this.authService.getCookiesForLogOut();
+  async logout(
+    @Req() req,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
     await this.authService.removeRefreshToken(req.user.id);
-
-    res.cookie('Authentication', '', accessOption);
-    res.cookie('Refresh', '', refreshOption);
     this.logger.verbose(`로그아웃 성공`);
+    return { accessToken: '', refreshToken: '' };
   }
 
   @Public()

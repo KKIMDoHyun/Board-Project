@@ -1,8 +1,10 @@
-import {AxiosInstance} from 'axios';
+import LoginStore from '@/stores/LoginStore';
+import axios, {AxiosInstance} from 'axios';
 
 export function setInterceptors(instance: AxiosInstance) {
   instance.interceptors.request.use(
     function (config) {
+      config.headers!.Authorization = `Bearer ${LoginStore.accessToken}`;
       return config;
     },
     function (error) {
@@ -12,18 +14,28 @@ export function setInterceptors(instance: AxiosInstance) {
 
   instance.interceptors.response.use(
     function (response) {
-      console.log('RESPONSE', response.headers);
       return response;
     },
-    function (error) {
+    async error => {
       const {
         config,
         response: {status},
       } = error;
+      const originRequest = config;
       if (status === 401) {
-        console.log('ERROR');
+        console.log('AccessToken 유효기간 만료');
+        try {
+          const res = await axios.post('http://10.0.2.2:3000/auth/refresh', {
+            refreshToken: LoginStore.refreshToken,
+          });
+          LoginStore.setAccessToken(res.data.accessToken);
+        } catch (err) {
+          console.log('AccessToken 재발급 에러');
+        }
       }
-      return Promise.reject(error);
+      originRequest.headers.Authorization = `Bearer ${LoginStore.accessToken}`;
+      console.log('AccessToken 재발급 후 요청');
+      return instance(originRequest);
     },
   );
   return instance;

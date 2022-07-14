@@ -1,6 +1,6 @@
 import {observer} from 'mobx-react';
 import React, {FC} from 'react';
-import {Dimensions, Text, View} from 'react-native';
+import {View} from 'react-native';
 import LoginBox from '../../components/SignInScreen/LoginBox';
 import {styles} from './styles';
 

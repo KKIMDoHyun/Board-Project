@@ -73,7 +73,7 @@ export class AuthService {
       return result;
     } else {
       throw new HttpException(
-        'Wrong credentials provided',
+        '아이디와 비밀번호를 잘못입력하셨습니다.',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -86,10 +86,6 @@ export class AuthService {
     });
     return {
       accessToken: token,
-      domain: 'localhost',
-      path: '/',
-      httpOnly: true,
-      maxAge: Number(config.get('jwt').accessToken_expiresIn) * 1000,
     };
   }
   getCookieWithJwtRefreshToken(id: number) {
@@ -100,37 +96,15 @@ export class AuthService {
     });
     return {
       refreshToken: token,
-      domain: 'localhost',
-      path: '/',
-      httpOnly: true,
-      maxAge: Number(config.get('jwt').refreshToken_expiresIn) * 1000,
-    };
-  }
-
-  /*
-   * 로그아웃
-   */
-  getCookiesForLogOut() {
-    return {
-      accessOption: {
-        domain: 'localhost',
-        path: '/',
-        httpOnly: true,
-        maxAge: 0,
-      },
-      refreshOption: {
-        domain: 'localhost',
-        path: '/',
-        httpOnly: true,
-        maxAge: 0,
-      },
     };
   }
 
   async getProfile(userId: string): Promise<UserInfoDto> {
     const user = await this.userRepository.findOne({ userId });
     if (user) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, currentHashedRefreshToken, ...result } = user;
+      this.logger.verbose(`회원정보 조회 ${JSON.stringify(result)}`);
       return result;
     } else {
       return null;

@@ -1,5 +1,6 @@
 // import {getProfile} from '@/utils/api/auth';
 import {instance} from '@/utils/api';
+import {getProfile} from '@/utils/api/auth';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import {observer} from 'mobx-react';
@@ -16,7 +17,9 @@ const HomeScreen: FC = () => {
       <Pressable
         style={{marginVertical: 30}}
         onPress={() => {
-          // getProfile();
+          getProfile()
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err));
         }}>
         <Text>정보가져오기</Text>
       </Pressable>

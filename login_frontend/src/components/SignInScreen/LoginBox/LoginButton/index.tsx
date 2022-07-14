@@ -1,12 +1,11 @@
 import {observer} from 'mobx-react';
-import React, {FC, useCallback, useState} from 'react';
-import {Pressable, Text, TextInput, View} from 'react-native';
+import React, {FC} from 'react';
+import {Pressable, Text, View} from 'react-native';
 import {styles} from './styles';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import LoginStore from '@/stores/LoginStore';
 import {useNavigation} from '@react-navigation/native';
 import {signIn, test} from '@/utils/api/auth';
-import instance from '@/utils/axios';
 
 const LoginButton: FC = () => {
   const navigation = useNavigation();
@@ -40,25 +39,12 @@ const LoginButton: FC = () => {
             signIn(user)
               .then(res => {
                 if (res.status === 201) {
-                  const cookie = res.headers['set-cookie'];
-                  LoginStore.setCookie(cookie[0]);
+                  LoginStore.setAccessToken(res.data.accessToken);
+                  LoginStore.setRefreshToken(res.data.refreshToken);
                   navigation.navigate('Home');
                 }
               })
-              .catch(err => console.log(err));
-            // instance
-            //   .post('/auth/signin', {
-            //     userId: 'test4',
-            //     password: '1234',
-            //   })
-            //   .then(res => {
-            //     if (res.status === 201) {
-            //       const cookie = res.headers['set-cookie'];
-            //       LoginStore.setCookie(cookie[0]);
-            //       navigation.navigate('Home');
-            //     }
-            //   })
-            //   .catch(err => console.log(err));
+              .catch(err => console.log(err.response.data.message));
           }}>
           <Text style={styles.loginBtnText}>로그인</Text>
         </Pressable>
