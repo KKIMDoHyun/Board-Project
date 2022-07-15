@@ -54,111 +54,88 @@ const SignUpInput: FC = () => {
   );
   return (
     <>
-      <View style={styles.lineContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>아이디</Text>
-        </View>
+      <View style={styles.mb17}>
+        <Text style={styles.titleText}>아이디</Text>
         <TextInput
-          style={styles.idTextInput}
+          style={styles.textInput}
           onChangeText={text => {
             onChangeId(text);
           }}
-          placeholder="아이디를 입력하세요."
         />
-        <Pressable>
-          <Text style={[styles.titleText, styles.ml20]}>중복확인</Text>
-        </Pressable>
       </View>
-
-      <View style={styles.lineContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>이메일</Text>
-        </View>
+      <View style={styles.mb17}>
+        <Text style={styles.titleText}>이메일</Text>
         <TextInput
-          style={styles.emailTextInput}
+          style={styles.textInput}
           onChangeText={text => {
             onChangeEmail(text);
           }}
-          placeholder="이메일을 입력하세요."
         />
       </View>
-
-      <View style={styles.lineContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>이름</Text>
-        </View>
+      <View style={styles.mb17}>
+        <Text style={styles.titleText}>비밀번호</Text>
         <TextInput
-          style={styles.userNameTextInput}
-          onChangeText={text => {
-            onChangeUsername(text);
-          }}
-          placeholder="이름을 입력하세요."
-        />
-      </View>
-      <View style={styles.lineContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>성별</Text>
-        </View>
-        {/*  */}
-        <Pressable>
-          <View style={{flexDirection: 'row', marginRight: 30}}>
-            <View
-              style={{
-                width: 20,
-                height: 20,
-                borderWidth: 1,
-                borderRadius: 80,
-              }}></View>
-            <Text style={{marginLeft: 10}}>남자</Text>
-          </View>
-        </Pressable>
-        <Pressable>
-          <View style={{flexDirection: 'row'}}>
-            <View
-              style={{
-                width: 20,
-                height: 20,
-                borderWidth: 1,
-                borderRadius: 80,
-              }}></View>
-            <Text style={{marginLeft: 10}}>여자</Text>
-          </View>
-        </Pressable>
-      </View>
-      <View style={styles.lineContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>핸드폰 번호</Text>
-        </View>
-        <TextInput
-          style={styles.phoneNumberTextInput}
-          onChangeText={text => {
-            onChangePhoneNumber(text);
-          }}
-          placeholder="핸드폰 번호를 입력하세요."
-        />
-      </View>
-      <View style={styles.lineContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>비밀번호</Text>
-        </View>
-        <TextInput
-          style={styles.passwordTextInput}
+          style={styles.textInput}
           onChangeText={text => {
             onChangePassword(text);
           }}
-          placeholder="비밀번호를 입력하세요."
         />
       </View>
-      <View style={styles.lineContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>비밀번호 확인</Text>
-        </View>
+      <View style={styles.mb50}>
+        <Text style={styles.titleText}>비밀번호 확인</Text>
         <TextInput
-          style={styles.passwordTextInput}
+          style={styles.textInput}
           onChangeText={text => {
             onChangeCheckPassword(text);
           }}
-          placeholder="비밀번호를 재입력하세요."
+        />
+      </View>
+
+      <View style={styles.mb17}>
+        <Text style={styles.titleText}>이름</Text>
+        <TextInput
+          style={styles.textInput}
+          onChangeText={text => {
+            onChangeUsername(text);
+          }}
+        />
+      </View>
+      <View style={styles.mb17}>
+        <Text style={styles.titleText}>성별</Text>
+        <View style={{flexDirection: 'row', marginTop: 10}}>
+          <Pressable>
+            <View style={{flexDirection: 'row', marginRight: 30}}>
+              <View
+                style={{
+                  width: 20,
+                  height: 20,
+                  borderWidth: 1,
+                  borderRadius: 80,
+                }}></View>
+              <Text style={{marginLeft: 10}}>남자</Text>
+            </View>
+          </Pressable>
+          <Pressable>
+            <View style={{flexDirection: 'row'}}>
+              <View
+                style={{
+                  width: 20,
+                  height: 20,
+                  borderWidth: 1,
+                  borderRadius: 80,
+                }}></View>
+              <Text style={{marginLeft: 10}}>여자</Text>
+            </View>
+          </Pressable>
+        </View>
+      </View>
+      <View style={styles.mb17}>
+        <Text style={styles.titleText}>휴대전화</Text>
+        <TextInput
+          style={styles.textInput}
+          onChangeText={text => {
+            onChangePhoneNumber(text);
+          }}
         />
       </View>
     </>

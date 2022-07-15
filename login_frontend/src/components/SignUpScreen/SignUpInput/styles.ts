@@ -1,17 +1,34 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  signUpContainer: {
-    backgroundColor: '#FFFFFF',
-    width: 430,
-    height: 700,
-    justifyContent: 'center',
-    paddingHorizontal: 10,
+  // signUpContainer: {
+  //   backgroundColor: '#FFFFFF',
+  //   width: 430,
+  //   height: 700,
+  //   justifyContent: 'center',
+  //   paddingHorizontal: 10,
+  // },
+  titleText: {
+    color: '#000000',
+    fontWeight: '600',
+    fontSize: 14,
   },
+  textInput: {
+    marginTop: 7,
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 1,
+    padding: 10,
+    backgroundColor: '#FFFFFF',
+  },
+  mb17: {
+    marginBottom: 17,
+  },
+  mb50: {
+    marginBottom: 50,
+  },
+
   lineContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
     marginBottom: 20,
   },
   titleContainer: {
@@ -19,19 +36,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 10,
   },
-  titleText: {
-    color: '#000000',
-    fontSize: 14,
-    fontWeight: '500',
-  },
   ml20: {
     marginLeft: 20,
-  },
-  idTextInput: {
-    width: '50%',
-    height: 40,
-    borderWidth: 1,
-    padding: 10,
   },
   emailTextInput: {
     width: '60%',
