@@ -8,11 +8,13 @@ import {Pressable, Text, View} from 'react-native';
 import {styles} from './styles';
 
 const LoginButton: FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   const login = () => {
-    if (UserStore.userId === '' || UserStore.password === '') {
-      AdditionalFuncStore.setErrMessage('아이디와 비밀번호를 입력하세요');
+    if (UserStore.userId === '') {
+      AdditionalFuncStore.setErrMessage('아이디를 입력하세요!');
+    } else if (UserStore.password === '') {
+      AdditionalFuncStore.setErrMessage('비밀번호를 입력하세요!');
     } else {
       const user = {
         userId: UserStore.userId,
@@ -33,7 +35,7 @@ const LoginButton: FC = () => {
     }
   };
   return (
-    <View>
+    <View style={styles.container}>
       <Pressable
         style={styles.loginBtn}
         onPress={() => {
@@ -41,6 +43,24 @@ const LoginButton: FC = () => {
         }}>
         <Text style={styles.loginBtnText}>로그인</Text>
       </Pressable>
+      <View style={styles.line} />
+      <View style={styles.subContainer}>
+        <Pressable onPress={() => console.log('비밀번호 찾기')}>
+          <Text style={styles.subText}>비밀번호 찾기</Text>
+        </Pressable>
+        <Text style={styles.mh6}> | </Text>
+        <Pressable onPress={() => console.log('아이디 찾기')}>
+          <Text style={styles.subText}>아이디 찾기</Text>
+        </Pressable>
+        <Text style={styles.mh6}> | </Text>
+        <Pressable
+          onPress={() => {
+            console.log('회원가입');
+            navigation.navigate('SignUp');
+          }}>
+          <Text style={styles.subText}>회원가입</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };

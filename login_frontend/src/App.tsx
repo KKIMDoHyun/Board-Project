@@ -22,8 +22,8 @@ const App: FC = () => {
         screenOptions={{headerShown: false}}
         initialRouteName="SignIn">
         <Stack.Screen name="SignIn" component={SignInScreen} />
-        {/* <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="SignUp" component={SignUpScreen} /> */}
+        <Stack.Screen name="SignUp" component={SignUpScreen} />
+        {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

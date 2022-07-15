@@ -2,17 +2,16 @@ import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
-    backgroundColor: 'red',
+    marginVertical: 10,
   },
-  signUpAndAutoLoginBtn: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  errMessageContainer: {
+    justifyContent: 'center',
   },
   errMessage: {
-    color: 'blue',
-    marginBottom: 5,
+    color: 'red',
+    fontSize: 14,
+    fontWeight: '600',
+    marginTop: 15,
   },
   signUpText: {
     color: '#7a7974',

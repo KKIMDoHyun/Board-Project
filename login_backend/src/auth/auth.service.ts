@@ -73,7 +73,7 @@ export class AuthService {
       return result;
     } else {
       throw new HttpException(
-        '아이디 또는 비밀번호를 잘못 입력했습니다.',
+        '아이디 또는 비밀번호를 잘못 입력했습니다!',
         HttpStatus.BAD_REQUEST,
       );
     }
