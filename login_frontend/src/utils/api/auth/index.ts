@@ -6,8 +6,11 @@ function signIn(userData: Object) {
 function signUp(userData: Object) {
   return instance.post('/auth/signup', userData);
 }
+function idRedundancyCheck(userId: Object) {
+  return instance.post('/auth/idRedundancyCheck', userId);
+}
 function getProfile() {
   return instance.get('/auth/profile');
 }
 
-export {signIn, signUp, getProfile};
+export {signIn, signUp, idRedundancyCheck, getProfile};

@@ -1,13 +1,6 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  // signUpContainer: {
-  //   backgroundColor: '#FFFFFF',
-  //   width: 430,
-  //   height: 700,
-  //   justifyContent: 'center',
-  //   paddingHorizontal: 10,
-  // },
   titleText: {
     color: '#000000',
     fontWeight: '600',
@@ -21,13 +14,41 @@ export const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#FFFFFF',
   },
-  mb17: {
-    marginBottom: 17,
+  redundancyCheckBox: {
+    borderWidth: 1,
+    position: 'absolute',
+    bottom: 10,
+    right: 30,
+    width: 80,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#e2f5e1',
   },
-  mb50: {
-    marginBottom: 50,
+  redundancyCheckText: {
+    color: '#000000',
+    fontSize: 14,
+    fontWeight: '500',
   },
-
+  genderContainer: {
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+  genderRow: {
+    flexDirection: 'row',
+  },
+  genderCheckBox: {
+    width: 20,
+    height: 20,
+    borderWidth: 1,
+    borderRadius: 80,
+  },
+  bgColor_black: {
+    backgroundColor: '#000000',
+  },
+  bgColor_white: {
+    backgroundColor: '#FFFFFF',
+  },
   lineContainer: {
     marginBottom: 20,
   },
@@ -62,5 +83,18 @@ export const styles = StyleSheet.create({
     height: 40,
     borderWidth: 1,
     padding: 10,
+  },
+
+  mb17: {
+    marginBottom: 17,
+  },
+  mb50: {
+    marginBottom: 50,
+  },
+  ml10: {
+    marginLeft: 10,
+  },
+  mr50: {
+    marginRight: 50,
   },
 });

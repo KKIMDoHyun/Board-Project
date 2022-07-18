@@ -9,23 +9,23 @@ import {useNavigation} from '@react-navigation/native';
 
 const SignUpButton: FC = () => {
   const navigation = useNavigation<any>();
-  const {userId, email, username, phoneNumber, password} = UserStore;
-  const user = {
-    userId: 'test442',
-    email: 'test1@test.com',
-    username: 'test1',
-    phoneNumber: '01023458252',
-    gender: 'MALE',
-    password: '1234',
-  };
+
   const signup = () => {
-    signUp(user)
-      .then(res => {
-        if (res.status === 201) {
-          navigation.navigate('SignIn');
-        }
-      })
-      .catch(err => {});
+    const user = {
+      userId: UserStore.userId,
+      email: UserStore.email,
+      username: UserStore.username,
+      phoneNumber: UserStore.phoneNumber,
+      password: UserStore.password,
+    };
+    console.log(user);
+    // signUp(user)
+    //   .then(res => {
+    //     if (res.status === 201) {
+    //       navigation.navigate('SignIn');
+    //     }
+    //   })
+    //   .catch(err => {});
   };
   return (
     <View>
@@ -33,6 +33,7 @@ const SignUpButton: FC = () => {
         style={styles.signUpBtn}
         onPress={() => {
           signup();
+          // console.log(user);
         }}>
         <Text style={styles.signUpBtnText}>가입하기</Text>
       </Pressable>
