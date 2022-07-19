@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     position: 'absolute',
     bottom: 10,
-    right: 30,
+    right: 10,
     width: 80,
     height: 30,
     alignItems: 'center',

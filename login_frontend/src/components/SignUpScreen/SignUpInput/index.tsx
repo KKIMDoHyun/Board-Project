@@ -3,25 +3,11 @@ import {idRedundancyCheck} from '@/utils/api/auth';
 import {observer} from 'mobx-react';
 import React, {FC, useCallback, useState} from 'react';
 import {Pressable, Text, TextInput, View} from 'react-native';
+import EmailInput from './EmailInput';
 import {styles} from './styles';
+import UserIdInput from './UserIdInput';
 
 const SignUpInput: FC = () => {
-  const [idCheck, setIdCheck] = useState(true);
-  const [enableIdCheck, setEnableIdCheck] = useState(false);
-  const [userIdErrMessage, setUserIdErrMessage] = useState('');
-  const onChangeId = useCallback((text: string) => {
-    UserStore.setUserId(text);
-    if (text === '') {
-      setIdCheck(false);
-    } else {
-      setEnableIdCheck(false);
-      setIdCheck(true);
-      setUserIdErrMessage('');
-    }
-  }, []);
-  // const onChangeEmail = useCallback((text: string) => {
-  //   UserStore.setEmail(text);
-  // }, []);
   // const onChangeUsername = useCallback((text: string) => {
   //   UserStore.setUsername(text);
   // }, []);
@@ -42,73 +28,11 @@ const SignUpInput: FC = () => {
   // }, []);
   return (
     <>
-      <View style={styles.mb17}>
-        <Text style={styles.titleText}>아이디</Text>
-        <View>
-          <TextInput
-            style={[
-              styles.textInput,
-              !idCheck || userIdErrMessage.length > 0
-                ? {borderColor: 'red'}
-                : enableIdCheck
-                ? {borderColor: 'blue'}
-                : {borderColor: 'gray'},
-            ]}
-            onFocus={() => {
-              if (UserStore.userId === '') {
-                setIdCheck(false);
-              } else {
-                setIdCheck(true);
-              }
-            }}
-            onChangeText={text => {
-              onChangeId(text);
-            }}
-          />
-          <Pressable
-            onPress={() => {
-              if (UserStore.userId.length > 5 && UserStore.userId.length < 20) {
-                idRedundancyCheck({userId: UserStore.userId})
-                  .then(res => {
-                    console.log('중복확인', res.data);
-                    setIdCheck(res.data);
-                    setEnableIdCheck(res.data);
-                  })
-                  .catch(err => {
-                    console.log(err.response.data);
-                    setUserIdErrMessage(err.response.data.message[0]);
-                  });
-              } else {
-                setUserIdErrMessage('아이디는 5~20 글자여야 합니다.');
-              }
-            }}>
-            <View style={styles.redundancyCheckBox}>
-              <Text style={styles.redundancyCheckText}>중복확인</Text>
-            </View>
-          </Pressable>
-        </View>
-        {!idCheck ? (
-          <Text style={{color: 'red', marginTop: 7}}>필수 항목입니다</Text>
-        ) : null}
-        {enableIdCheck ? (
-          <Text style={{color: 'blue', marginTop: 7}}>
-            사용 가능한 아이디입니다
-          </Text>
-        ) : null}
-        {userIdErrMessage.length > 0 ? (
-          <Text style={{color: 'red', marginTop: 7}}>{userIdErrMessage}</Text>
-        ) : null}
-      </View>
+      <UserIdInput />
+      <EmailInput />
+
+      {/* 비밀번호 */}
       {/* <View style={styles.mb17}>
-        <Text style={styles.titleText}>이메일</Text>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={text => {
-            onChangeEmail(text);
-          }}
-        />
-      </View>
-      <View style={styles.mb17}>
         <Text style={styles.titleText}>비밀번호</Text>
         <TextInput
           style={styles.textInput}
