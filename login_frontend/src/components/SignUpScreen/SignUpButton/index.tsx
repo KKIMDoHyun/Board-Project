@@ -19,6 +19,27 @@ const SignUpButton: FC = () => {
       password: UserStore.password,
     };
     console.log(user);
+
+    if (UserStore.username === '') {
+      UserStore.setUsernameCheck(false);
+    }
+    if (UserStore.password === '') {
+      UserStore.setPasswordCheck(false);
+    }
+    if (UserStore.rePassword === '') {
+      UserStore.setRePasswordCheck(false);
+    }
+    if (UserStore.password !== UserStore.rePassword) {
+      UserStore.setRePasswordCheck(false);
+    }
+    if (UserStore.phoneNumber === '') {
+      UserStore.setPhoneNumberCheck(false);
+    }
+    console.log('UserIdCheck: ', UserStore.userIdCheck);
+    console.log('Email: ', UserStore.emailFrontCheck, UserStore.emailBackCheck);
+    console.log('PasswordCheck: ', UserStore.passwordCheck);
+    console.log('RePasswordCheck: ', UserStore.rePasswordCheck);
+    console.log('UsernameCheck: ', UserStore.usernameCheck);
     // signUp(user)
     //   .then(res => {
     //     if (res.status === 201) {

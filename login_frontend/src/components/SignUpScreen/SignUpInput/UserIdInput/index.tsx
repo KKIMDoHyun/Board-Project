@@ -7,7 +7,6 @@ import {styles} from './styles';
 
 const UserIdInput: FC = () => {
   const [errMessage, setErrMessage] = useState('');
-  const [idCheck, setIdCheck] = useState(false);
   const onChangeId = useCallback((text: string) => {
     UserStore.setUserId(text);
     if (text === '') {
@@ -15,17 +14,17 @@ const UserIdInput: FC = () => {
     } else {
       setErrMessage('');
     }
-    setIdCheck(false);
+    UserStore.setUserIdCheck(false);
   }, []);
 
   return (
-    <View style={styles.mb17}>
+    <>
       <Text style={styles.titleText}>아이디</Text>
       <View>
         <TextInput
           style={[
             styles.textInput,
-            idCheck
+            UserStore.userIdCheck
               ? styles.borderBlue
               : errMessage === ''
               ? styles.borderGray
@@ -33,11 +32,8 @@ const UserIdInput: FC = () => {
           ]}
           maxLength={20}
           onFocus={() => {
-            setIdCheck(false);
             if (UserStore.userId === '') {
               setErrMessage('필수 항목입니다.');
-            } else {
-              setErrMessage('');
             }
           }}
           onChangeText={text => {
@@ -51,10 +47,10 @@ const UserIdInput: FC = () => {
                 .then(res => {
                   console.log('중복확인', res.data);
                   if (res.data) {
-                    setIdCheck(true);
+                    UserStore.setUserIdCheck(true);
                     setErrMessage('사용가능한 아이디입니다.');
                   } else {
-                    setIdCheck(false);
+                    UserStore.setUserIdCheck(false);
                     setErrMessage('이미 가입된 아이디입니다.');
                   }
                 })
@@ -70,10 +66,16 @@ const UserIdInput: FC = () => {
           </View>
         </Pressable>
       </View>
-      <Text style={idCheck ? styles.textBlue : styles.textRed}>
-        {errMessage}
-      </Text>
-    </View>
+      {errMessage.length > 0 ? (
+        <Text
+          style={[
+            styles.mt7,
+            UserStore.userIdCheck ? styles.textBlue : styles.textRed,
+          ]}>
+          {errMessage}
+        </Text>
+      ) : null}
+    </>
   );
 };
 

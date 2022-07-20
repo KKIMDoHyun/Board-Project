@@ -1,8 +1,8 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  mb17: {
-    marginBottom: 17,
+  mt17: {
+    marginTop: 17,
   },
   titleText: {
     color: '#000000',

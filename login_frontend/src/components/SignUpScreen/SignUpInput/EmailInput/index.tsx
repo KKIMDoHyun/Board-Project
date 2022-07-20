@@ -4,65 +4,55 @@ import React, {useState} from 'react';
 import {FC, useCallback} from 'react';
 import {Text, TextInput, View} from 'react-native';
 import {styles} from './styles';
-import {Dropdown} from 'react-native-element-dropdown';
+import EmailBack from './EmailBack';
 const EmailInput: FC = () => {
-  const data = [
-    {label: 'naver.com', value: 'naver.com'},
-    {label: 'gmail.com', value: 'gmail.com'},
-  ];
   const [errMessage, setErrMessage] = useState('');
   const onChangeEmail = useCallback((text: string) => {
-    UserStore.setEmail(text);
-    if (text === '') {
-      setErrMessage('필수 항목입니다.');
-    } else {
-      setErrMessage('');
-    }
+    UserStore.setEmailFront(text);
   }, []);
 
   return (
-    <View style={styles.mb17}>
+    <View style={styles.mt17}>
       <Text style={styles.titleText}>이메일</Text>
       <View style={styles.container}>
         <TextInput
-          maxLength={20}
           style={[
             styles.textInput,
-            errMessage.length > 0
+            !UserStore.emailFrontCheck && errMessage !== ''
               ? {borderColor: 'red'}
               : {borderColor: 'gray'},
           ]}
           onChangeText={text => {
             onChangeEmail(text);
           }}
-          onFocus={() => {
-            if (UserStore.email === '') {
-              setErrMessage('필수 항목입니다.');
-            } else if (UserStore.email.length < 5) {
-              setErrMessage('최소 5글자 이상 입력하세요.');
-            }
-          }}
+          maxLength={20}
           onBlur={() => {
-            if (0 < UserStore.email.length && UserStore.email.length < 5) {
+            if (
+              UserStore.emailFront.length > 0 &&
+              UserStore.emailFront.length < 5
+            ) {
               setErrMessage('최소 5글자 이상 입력하세요.');
+              UserStore.setEmailFrontCheck(false);
+            } else if (UserStore.emailFront.length === 0) {
+              setErrMessage('필수 항목입니다.');
+              UserStore.setEmailFrontCheck(false);
+            } else {
+              setErrMessage('');
+              UserStore.setEmailFrontCheck(true);
             }
           }}
         />
         <Text style={styles.emailText}>@</Text>
-        <Dropdown
-          data={data}
-          style={styles.dropdownStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          placeholderStyle={styles.placeholderStyle}
-          placeholder="이메일을 선택하세요"
-          autoScroll={false}
-          labelField="label"
-          valueField="value"
-          onChange={item => console.log(item)}
-        />
+        <EmailBack />
       </View>
-      {errMessage.length > 0 ? (
+      {!UserStore.emailFrontCheck && errMessage !== '' ? (
         <Text style={[styles.textRed, styles.mt7]}>{errMessage}</Text>
+      ) : null}
+
+      {!UserStore.emailBackCheck ? (
+        <Text style={[styles.textRed, styles.mt7]}>
+          이메일 형식을 선택하세요.
+        </Text>
       ) : null}
     </View>
   );
