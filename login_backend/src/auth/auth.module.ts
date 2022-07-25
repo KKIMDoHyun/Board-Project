@@ -26,4 +26,4 @@ const jwtConfig = config.get('jwt');
   providers: [AuthService, JwtStrategy, LocalStrategy, JwtRefreshTokenStrategy],
   exports: [JwtStrategy, PassportModule, AuthService],
 })
-export class UsersModule {}
+export class AuthModule {}
