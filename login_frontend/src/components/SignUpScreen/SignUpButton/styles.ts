@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'salmon',
     height: 50,
     borderRadius: 5,
+    marginTop: 30,
   },
   signUpBtnText: {
     color: '#000000',

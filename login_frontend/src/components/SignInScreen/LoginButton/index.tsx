@@ -11,14 +11,14 @@ const LoginButton: FC = () => {
   const navigation = useNavigation<any>();
 
   const login = () => {
-    if (UserStore.userId === '') {
+    if (UserStore.signInUserId === '') {
       AdditionalFuncStore.setErrMessage('아이디를 입력하세요!');
-    } else if (UserStore.password === '') {
+    } else if (UserStore.signInPassword === '') {
       AdditionalFuncStore.setErrMessage('비밀번호를 입력하세요!');
     } else {
       const user = {
-        userId: UserStore.userId,
-        password: UserStore.password,
+        userId: UserStore.signInUserId,
+        password: UserStore.signInPassword,
       };
       signIn(user)
         .then(res => {
@@ -26,7 +26,8 @@ const LoginButton: FC = () => {
             UserStore.setAccessToken(res.data.accessToken);
             UserStore.setRefreshToken(res.data.refreshToken);
             console.log('로그인 성공');
-            navigation.navigate('Home');
+            UserStore.clearSignInInput();
+            navigation.navigate('bottomTabs');
           }
         })
         .catch(err => {

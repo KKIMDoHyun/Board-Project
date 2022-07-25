@@ -1,6 +1,11 @@
 export type UserStoreType = {
   autoLoginToggle: boolean;
   setAutoLoginToggle: (toggle: boolean) => void;
+  signInUserId: string;
+  setSignInUserId: (userId: string) => void;
+  signInPassword: string;
+  setSignInPassword: (password: string) => void;
+  clearSignInInput: () => void;
 
   accessToken: string;
   setAccessToken: (token: string) => void;
@@ -10,26 +15,20 @@ export type UserStoreType = {
 
   userId: string;
   setUserId: (id: string) => void;
-
   email: string;
   setEmail: (emailFront: string, emailBack: string) => void;
   emailFront: string;
   setEmailFront: (email: string) => void;
   emailBack: string;
   setEmailBack: (email: string) => void;
-
   username: string;
   setUsername: (username: string) => void;
-
   gender: string;
   setGender: (gender: GenderType) => void;
-
   phoneNumber: string;
   setPhoneNumber: (phoneNumber: string) => void;
-
   password: string;
   setPassword: (password: string) => void;
-
   rePassword: string;
   setRePassword: (password: string) => void;
 

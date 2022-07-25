@@ -6,6 +6,18 @@ const UserStore: UserStoreType = observable({
   setAutoLoginToggle(toggle: boolean) {
     this.autoLoginToggle = toggle;
   },
+  signInUserId: '',
+  setSignInUserId(userId: string) {
+    this.signInUserId = userId;
+  },
+  signInPassword: '',
+  setSignInPassword(password: string) {
+    this.signInPassword = password;
+  },
+  clearSignInInput() {
+    this.setSignInUserId('');
+    this.setSignInPassword('');
+  },
   accessToken: '',
   setAccessToken(token: string) {
     this.accessToken = token;

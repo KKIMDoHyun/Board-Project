@@ -40,7 +40,6 @@ const SignUpButton: FC = () => {
       gender: UserStore.gender,
       phoneNumber: UserStore.phoneNumber,
     };
-    console.log(user);
     signUp(user)
       .then(res => {
         if (res.status === 201) {
