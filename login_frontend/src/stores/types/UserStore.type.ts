@@ -45,8 +45,6 @@ export type UserStoreType = {
   setRePasswordCheck: (flag: boolean) => void;
   usernameCheck: boolean;
   setUsernameCheck: (flag: boolean) => void;
-  genderCheck: boolean;
-  setGenderCheck: (flag: boolean) => void;
   phoneNumberCheck: boolean;
   setPhoneNumberCheck: (flag: boolean) => void;
 };

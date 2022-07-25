@@ -28,7 +28,6 @@ export class UserSignUpDto {
   readonly gender: GenderType;
 
   @IsNotEmpty()
-  @IsPhoneNumber('KR')
   readonly phoneNumber: string;
 
   @IsNotEmpty()

@@ -77,10 +77,6 @@ const UserStore: UserStoreType = observable({
   setUsernameCheck(flag: boolean) {
     this.usernameCheck = flag;
   },
-  genderCheck: false as boolean,
-  setGenderCheck(flag: boolean) {
-    this.genderCheck = flag;
-  },
   phoneNumberCheck: true as boolean,
   setPhoneNumberCheck(flag: boolean) {
     this.phoneNumberCheck = flag;

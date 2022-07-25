@@ -21,7 +21,6 @@ export function setInterceptors(instance: AxiosInstance) {
         config,
         response: {status},
       } = error;
-      console.log(status);
       const originRequest = config;
       if (status === 401) {
         console.log('AccessToken 유효기간 만료');
@@ -37,7 +36,6 @@ export function setInterceptors(instance: AxiosInstance) {
         console.log('AccessToken 재발급 후 요청');
         return instance(originRequest);
       } else {
-        console.log('DSFD');
         return Promise.reject(error);
       }
     },

@@ -31,7 +31,7 @@ const UserIdInput: FC = () => {
               : styles.borderRed,
           ]}
           maxLength={20}
-          onFocus={() => {
+          onBlur={() => {
             if (UserStore.userId === '') {
               setErrMessage('필수 항목입니다.');
             }
