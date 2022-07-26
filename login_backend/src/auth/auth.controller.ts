@@ -6,7 +6,6 @@ import {
   Logger,
   Post,
   Req,
-  Res,
   UseGuards,
 } from '@nestjs/common';
 import { UserSignUpDto } from './dto/user-signUp.dto';
