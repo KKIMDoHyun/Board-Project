@@ -121,6 +121,7 @@ export class AuthService {
     refreshToken: string,
     id: number,
   ): Promise<User | undefined> {
+    console.log(refreshToken, id);
     const user = await this.userRepository.findOne({ id });
     const isRefreshTokenMatching = await bcrypt.compare(
       refreshToken,

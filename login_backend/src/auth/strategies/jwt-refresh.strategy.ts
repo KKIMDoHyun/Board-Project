@@ -12,10 +12,7 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
   Strategy,
   'jwt-refresh-token',
 ) {
-  constructor(
-    @InjectRepository(User)
-    private authService: AuthService,
-  ) {
+  constructor(private authService: AuthService) {
     super({
       secretOrKey: config.get('jwt.refreshToken_secret'),
       jwtFromRequest: ExtractJwt.fromBodyField('refreshToken'),
