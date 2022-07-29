@@ -1,10 +1,12 @@
 import { Exclude } from 'class-transformer';
 import { Board } from 'src/boards/entity/board.entity';
+import { Comment } from 'src/comments/entity/comment.entity';
 import {
   BaseEntity,
   Column,
   Entity,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
@@ -38,6 +40,11 @@ export class User extends BaseEntity {
   @Exclude()
   currentHashedRefreshToken?: string;
 
-  @OneToMany((type) => Board, (board) => board.user, { eager: true })
+  // user 1 : N board
+  @OneToMany(() => Board, (board) => board.user, { eager: true })
   boards: Board[];
+
+  // // user 1 : N Comment
+  // @OneToMany((type) => Comment, (comment) => comment.user, { eager: true })
+  // comments: Comment[];
 }

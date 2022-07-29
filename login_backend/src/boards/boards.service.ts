@@ -13,31 +13,40 @@ export class BoardsService {
     private readonly boardRepository: Repository<Board>,
   ) {}
 
-  async getAllBoards(): Promise<Board[]> {
-    return await this.boardRepository.find();
-  }
-
   async createBoard(
     createBoardDto: CreateBoardDto,
     user: User,
   ): Promise<Board> {
     const { title, content } = createBoardDto;
-    const { userId, username, ...result } = user;
-    console.log(userId, username, result);
     const board = await this.boardRepository.create({
       title,
       content,
       status: BoardStatus.PUBLIC,
       user,
-      user_id: userId,
-      username: username,
     });
     await this.boardRepository.save(board);
     return board;
   }
 
+  async getAllBoards(): Promise<Board[]> {
+    const board = await this.boardRepository
+      .createQueryBuilder('br')
+      .select(['br', 'user.id', 'user.email', 'username'])
+      .leftJoin('br.user', 'user')
+      .getMany();
+    console.log(board);
+    return board;
+  }
+
   async getBoardById(id: number): Promise<Board> {
-    const foundBoard = await this.boardRepository.findOne({ id });
+    // const foundBoard = await this.boardRepository.findOne({ id });
+    const foundBoard = await this.boardRepository
+      .createQueryBuilder('br')
+      .select(['br', 'user.id', 'user.email', 'username'])
+      .leftJoin('br.user', 'user')
+      .where('br.id = :id', { id })
+      .getOne();
+
     if (!foundBoard) {
       throw new NotFoundException(`id가 ${id}인 게시글을 찾을 수 없습니다.`);
     }

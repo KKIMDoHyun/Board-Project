@@ -1,9 +1,12 @@
 import { User } from 'src/auth/entity/user.entity';
+import { Comment } from 'src/comments/entity/comment.entity';
 import {
   BaseEntity,
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { BoardStatus } from '../type/board-status.enum';
@@ -22,11 +25,12 @@ export class Board extends BaseEntity {
   @Column()
   status: BoardStatus;
 
-  @ManyToOne((type) => User, (user) => user.boards, { eager: false })
+  // board N : 1 user
+  @ManyToOne(() => User, (user) => user.boards, { eager: false })
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @Column()
-  user_id: string;
-  @Column()
-  username: string;
+  // board 1 : N Comment
+  // @OneToMany((type) => Comment, (comment) => comment.board, { eager: true })
+  // comments: Comment[];
 }

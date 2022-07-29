@@ -6,12 +6,11 @@ import {
   Param,
   Patch,
   Post,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { Public } from 'src/auth/decorators/public-decorator';
 import { User } from 'src/auth/entity/user.entity';
+import { CommentsService } from 'src/comments/comments.service';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { Board } from './entity/board.entity';
@@ -20,7 +19,10 @@ import { BoardStatus } from './type/board-status.enum';
 
 @Controller('boards')
 export class BoardsController {
-  constructor(private boardsService: BoardsService) {}
+  constructor(
+    private boardsService: BoardsService,
+    private commentsService: CommentsService,
+  ) {}
 
   @Get()
   getAllBoards(): Promise<Board[]> {
@@ -68,4 +70,16 @@ export class BoardsController {
   ): Promise<Board> {
     return this.boardsService.updateBoardStatus(id, status);
   }
+
+  /**
+   * 댓글 기능
+   */
+  // @Post('/:id/reply')
+  // createReply(
+  //   @Param('id') id: number,
+  //   @Body() createReplyDto: CreateReplyDto,
+  //   @GetUser() user: User,
+  // ): Promise<Reply> {
+  //   return this.commentsService.createComment(id, createReplyDto, user);
+  // }
 }

@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { BoardsModule } from './boards/boards.module';
+import { CommentsModule } from './comments/comments.module';
 
 const dbConfig = config.get('db');
 
@@ -26,6 +27,7 @@ const dbConfig = config.get('db');
     AuthModule,
     UserModule,
     BoardsModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],
