@@ -7,13 +7,16 @@ import React, {FC} from 'react';
 import {Pressable, Text, View} from 'react-native';
 import {styles} from './styles';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import BoardList from '@/components/HomeScreen/BoardList';
+import CreateBoard from '@/components/HomeScreen/CreateBoard';
 
 const Tab = createBottomTabNavigator();
 
 const HomeScreen: FC = () => {
   return (
     <View style={styles.container}>
-      <Text>방 만들기 </Text>
+      <CreateBoard />
+      <BoardList />
     </View>
   );
 };

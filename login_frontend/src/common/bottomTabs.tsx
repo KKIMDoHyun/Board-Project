@@ -8,7 +8,9 @@ const Tab = createBottomTabNavigator();
 
 const BottomTabs: FC = () => {
   return (
-    <Tab.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{headerShown: false, unmountOnBlur: true}}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Setting" component={SettingScreen} />
     </Tab.Navigator>

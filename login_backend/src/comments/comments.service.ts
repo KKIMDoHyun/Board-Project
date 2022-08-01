@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/auth/entity/user.entity';
 import { Board } from 'src/boards/entity/board.entity';
@@ -21,6 +21,11 @@ export class CommentsService {
   ): Promise<Comment> {
     const { boardId, content } = createCommentDto;
     const board = await this.boardRepository.findOne(boardId);
+    if (!board) {
+      throw new NotFoundException(
+        `id가 ${boardId}인 게시글을 찾을 수 없습니다.`,
+      );
+    }
     const comment = await this.commentRepository.create({
       user,
       board,
@@ -35,7 +40,7 @@ export class CommentsService {
       .createQueryBuilder('cr')
       .leftJoinAndSelect('cr.user', 'user')
       .leftJoinAndSelect('cr.board', 'board')
-      .select(['cr', 'user.id', 'user.email', 'board.id'])
+      .select(['cr', 'user.id', 'user.email', 'user.username', 'board.id'])
       .getMany();
 
     return comments;

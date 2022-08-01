@@ -33,9 +33,15 @@ export class BoardsService {
       .createQueryBuilder('br')
       .leftJoinAndSelect('br.user', 'user')
       .leftJoinAndSelect('br.comments', 'comments')
-      .select(['br', 'user.id', 'user.email', 'user.username', 'comments'])
+      .select([
+        'br',
+        'user.id',
+        'user.userId',
+        'user.email',
+        'user.username',
+        'comments',
+      ])
       .getMany();
-    console.log(board);
     return board;
   }
 
@@ -44,7 +50,14 @@ export class BoardsService {
       .createQueryBuilder('br')
       .leftJoinAndSelect('br.user', 'user')
       .leftJoinAndSelect('br.comments', 'comments')
-      .select(['br', 'user.id', 'user.email', 'user.username', 'comments'])
+      .select([
+        'br',
+        'user.id',
+        'user.userId',
+        'user.email',
+        'user.username',
+        'comments',
+      ])
       .where('br.id = :id', { id })
       .getOne();
 
