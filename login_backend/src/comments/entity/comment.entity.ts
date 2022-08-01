@@ -4,6 +4,7 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -17,9 +18,11 @@ export class Comment extends BaseEntity {
   @Column()
   content: string;
 
-  // @ManyToOne((type) => Board, (board) => board.comments, { eager: false })
-  // board: Board;
+  @ManyToOne(() => User, (user) => user.comments, { eager: false })
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
-  // @ManyToOne((type) => User, (user) => user.comments, { eager: false })
-  // user: User;
+  @ManyToOne(() => Board, (board) => board.comments, { eager: false })
+  @JoinColumn({ name: 'board_id' })
+  board: Board;
 }

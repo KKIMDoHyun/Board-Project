@@ -14,6 +14,6 @@ import { Comment } from 'src/comments/entity/comment.entity';
     TypeOrmModule.forFeature([Comment]),
   ],
   controllers: [BoardsController],
-  providers: [BoardsService, CommentsService],
+  providers: [BoardsService],
 })
 export class BoardsModule {}

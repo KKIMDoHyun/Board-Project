@@ -31,19 +31,20 @@ export class BoardsService {
   async getAllBoards(): Promise<Board[]> {
     const board = await this.boardRepository
       .createQueryBuilder('br')
-      .select(['br', 'user.id', 'user.email', 'username'])
-      .leftJoin('br.user', 'user')
+      .leftJoinAndSelect('br.user', 'user')
+      .leftJoinAndSelect('br.comments', 'comments')
+      .select(['br', 'user.id', 'user.email', 'user.username', 'comments'])
       .getMany();
     console.log(board);
     return board;
   }
 
   async getBoardById(id: number): Promise<Board> {
-    // const foundBoard = await this.boardRepository.findOne({ id });
     const foundBoard = await this.boardRepository
       .createQueryBuilder('br')
-      .select(['br', 'user.id', 'user.email', 'username'])
-      .leftJoin('br.user', 'user')
+      .leftJoinAndSelect('br.user', 'user')
+      .leftJoinAndSelect('br.comments', 'comments')
+      .select(['br', 'user.id', 'user.email', 'user.username', 'comments'])
       .where('br.id = :id', { id })
       .getOne();
 
@@ -54,7 +55,7 @@ export class BoardsService {
   }
 
   async deleteAllBoard(): Promise<void> {
-    await this.boardRepository.clear();
+    await this.boardRepository.delete({});
   }
 
   async deleteBoard(id: number, user: User): Promise<void> {
