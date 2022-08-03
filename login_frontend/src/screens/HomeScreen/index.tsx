@@ -9,12 +9,14 @@ import {styles} from './styles';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import BoardList from '@/components/HomeScreen/BoardList';
 import CreateBoard from '@/components/HomeScreen/CreateBoard';
+import TopHeader from '@/components/HomeScreen/TopHeader';
 
 const Tab = createBottomTabNavigator();
 
 const HomeScreen: FC = () => {
   return (
     <View style={styles.container}>
+      <TopHeader />
       <CreateBoard />
       <BoardList />
     </View>

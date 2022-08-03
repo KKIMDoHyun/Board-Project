@@ -4,25 +4,24 @@ import {useFocusEffect} from '@react-navigation/native';
 import {observer} from 'mobx-react';
 import React, {useEffect} from 'react';
 import {FC} from 'react';
-import {FlatList, Text, TextInput, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Board from '../Board';
 
-const CreateBoard: FC = () => {
+const TopHeader: FC = () => {
   return (
     <View
       style={{
-        borderWidth: 2,
-        marginVertical: 20,
-        height: 50,
-        backgroundColor: '#FFFFFF',
+        borderBottomWidth: 1,
+        height: 60,
         justifyContent: 'center',
-        paddingLeft: 10,
-        borderRadius: 20,
+        backgroundColor: '#e2f5e1',
       }}>
-      <Text style={{color: '#000000'}}>글 쓰기</Text>
+      <Text style={{color: '#000000', fontSize: 30, fontWeight: '700'}}>
+        어플
+      </Text>
     </View>
   );
 };
 
-export default observer(CreateBoard);
+export default observer(TopHeader);

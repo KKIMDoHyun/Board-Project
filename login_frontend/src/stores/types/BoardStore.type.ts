@@ -10,7 +10,8 @@ export type BoardType = {
   content: string;
   status: BoardStatusType;
   user: UserOfBoardType;
-  comments: CommentsOfBoardType;
+  comments: CommentsOfBoardType[];
+  created_at: string;
 };
 
 export type BoardStatusType = 'PUBLIC' | 'PRIVATE';

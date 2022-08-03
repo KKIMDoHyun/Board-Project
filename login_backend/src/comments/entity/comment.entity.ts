@@ -3,6 +3,7 @@ import { Board } from 'src/boards/entity/board.entity';
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -17,6 +18,9 @@ export class Comment extends BaseEntity {
 
   @Column()
   content: string;
+
+  @CreateDateColumn()
+  created_at: Date;
 
   @ManyToOne(() => User, (user) => user.comments, { eager: false })
   @JoinColumn({ name: 'user_id' })

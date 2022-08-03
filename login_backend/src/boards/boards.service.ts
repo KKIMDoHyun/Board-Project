@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/auth/entity/user.entity';
+import { Comment } from 'src/comments/entity/comment.entity';
 import { Repository } from 'typeorm';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { Board } from './entity/board.entity';
@@ -11,6 +12,9 @@ export class BoardsService {
   constructor(
     @InjectRepository(Board)
     private readonly boardRepository: Repository<Board>,
+
+    @InjectRepository(Comment)
+    private readonly commentRepository: Repository<Comment>,
   ) {}
 
   async createBoard(
@@ -68,6 +72,7 @@ export class BoardsService {
   }
 
   async deleteAllBoard(): Promise<void> {
+    await this.commentRepository.delete({});
     await this.boardRepository.delete({});
   }
 

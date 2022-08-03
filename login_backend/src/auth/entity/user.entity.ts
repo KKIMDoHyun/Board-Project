@@ -4,6 +4,7 @@ import { Comment } from 'src/comments/entity/comment.entity';
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   OneToMany,
   OneToOne,
@@ -39,6 +40,9 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   @Exclude()
   currentHashedRefreshToken?: string;
+
+  @CreateDateColumn()
+  created_at: Date;
 
   // user 1 : N board
   @OneToMany(() => Board, (board) => board.user, { eager: true })

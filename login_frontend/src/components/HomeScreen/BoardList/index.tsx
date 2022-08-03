@@ -16,7 +16,7 @@ const BoardList: FC = () => {
     BoardStore.fetchBoards();
   }, []);
   return (
-    <SafeAreaView style={{width: '100%', marginTop: '20%'}}>
+    <SafeAreaView style={{flex: 1, width: '100%'}}>
       <FlatList
         showsHorizontalScrollIndicator
         data={BoardStore.boards}
