@@ -35,12 +35,37 @@ export class CommentsService {
     return comment;
   }
 
+  async getComments(id: number): Promise<Comment[]> {
+    const comments = await this.commentRepository
+      .createQueryBuilder('cr')
+      .leftJoinAndSelect('cr.user', 'user')
+      .leftJoinAndSelect('cr.board', 'board')
+      .select([
+        'cr',
+        'user.id',
+        'user.userId',
+        'user.email',
+        'user.username',
+        'board.id',
+      ])
+      .where('board.id = :id', { id })
+      .getMany();
+
+    return comments;
+  }
   async getAllComments(): Promise<Comment[]> {
     const comments = await this.commentRepository
       .createQueryBuilder('cr')
       .leftJoinAndSelect('cr.user', 'user')
       .leftJoinAndSelect('cr.board', 'board')
-      .select(['cr', 'user.id', 'user.email', 'user.username', 'board.id'])
+      .select([
+        'cr',
+        'user.id',
+        'user.userId',
+        'user.email',
+        'user.username',
+        'board.id',
+      ])
       .getMany();
 
     return comments;

@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { User } from 'src/auth/entity/user.entity';
 import { CommentsService } from './comments.service';
@@ -17,7 +25,12 @@ export class CommentsController {
     return this.commentsService.createComment(createCommentDto, user);
   }
 
-  @Get('')
+  @Get('/board/:id')
+  getComments(@Param('id') id: number): Promise<Comment[]> {
+    return this.commentsService.getComments(id);
+  }
+
+  @Get('/all')
   getAllComments(): Promise<Comment[]> {
     return this.commentsService.getAllComments();
   }
