@@ -1,5 +1,5 @@
 import {observable} from 'mobx';
-import {GenderType, UserStoreType} from './types/UserStore.type';
+import {GenderType, UserInfoType, UserStoreType} from './types/UserStore.type';
 
 const UserStore: UserStoreType = observable({
   autoLoginToggle: false as boolean,
@@ -92,6 +92,11 @@ const UserStore: UserStoreType = observable({
   phoneNumberCheck: true as boolean,
   setPhoneNumberCheck(flag: boolean) {
     this.phoneNumberCheck = flag;
+  },
+
+  userInfo: {} as UserInfoType,
+  setUserInfo(userInfo: UserInfoType) {
+    this.userInfo = Object.assign({}, userInfo);
   },
 });
 

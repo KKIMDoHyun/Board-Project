@@ -25,6 +25,16 @@ const LoginButton: FC = () => {
           if (res.status === 201) {
             UserStore.setAccessToken(res.data.accessToken);
             UserStore.setRefreshToken(res.data.refreshToken);
+            const {id, userId, username, email, created_at, gender, ...remain} =
+              res.data.userInfo;
+            UserStore.setUserInfo({
+              id,
+              userId,
+              username,
+              email,
+              created_at,
+              gender,
+            });
             console.log('로그인 성공');
             UserStore.clearSignInInput();
             navigation.navigate('bottomTabs');

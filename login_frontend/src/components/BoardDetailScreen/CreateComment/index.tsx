@@ -4,7 +4,7 @@ import {FC} from 'react';
 import {Text, View} from 'react-native';
 import {styles} from './styles';
 
-const CreateBoard: FC = () => {
+const CreateComment: FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>글 쓰기</Text>
@@ -12,4 +12,4 @@ const CreateBoard: FC = () => {
   );
 };
 
-export default observer(CreateBoard);
+export default observer(CreateComment);

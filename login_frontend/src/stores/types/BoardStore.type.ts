@@ -2,6 +2,13 @@ export type BoardStoreType = {
   boards: BoardType[];
   setBoards: (boards: BoardType[]) => void;
   fetchBoards: () => void;
+
+  board: BoardType;
+  setBoard: (board: BoardType) => void;
+
+  comments: CommentType[];
+  setComments: (comments: CommentType[]) => void;
+  fetchComments: (boardId: number) => void;
 };
 
 export type BoardType = {
@@ -24,4 +31,16 @@ export type UserOfBoardType = {
 export type CommentsOfBoardType = {
   id: number;
   content: string;
+};
+
+export type CommentType = {
+  id: number;
+  content: string;
+  created_at: string;
+  user: UserOfBoardType;
+  board: BoardOfCommentType;
+};
+
+export type BoardOfCommentType = {
+  id: number;
 };

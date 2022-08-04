@@ -46,6 +46,17 @@ export type UserStoreType = {
   setUsernameCheck: (flag: boolean) => void;
   phoneNumberCheck: boolean;
   setPhoneNumberCheck: (flag: boolean) => void;
+
+  userInfo: UserInfoType;
+  setUserInfo: (userInfo: UserInfoType) => void;
 };
 
 export type GenderType = 'MALE' | 'FEMALE';
+export type UserInfoType = {
+  id: number;
+  userId: string;
+  username: string;
+  email: string;
+  created_at: string;
+  gender: GenderType;
+};

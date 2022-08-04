@@ -1,19 +1,27 @@
 import BoardStore from '@/stores/BoardStore';
 import {BoardType} from '@/stores/types/BoardStore.type';
+import {useNavigation} from '@react-navigation/native';
 import {observer} from 'mobx-react';
 import React, {useEffect} from 'react';
 import {FC} from 'react';
-import {Text, View} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import {styles} from './styles';
 
 type BoardProps = {
   board: BoardType;
 };
 const Board: FC<BoardProps> = ({board}) => {
+  const navigation = useNavigation<any>();
+
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => {
+        BoardStore.setBoard(board);
+        navigation.navigate('BoardDetail');
+      }}>
       <View style={styles.header}>
-        <View style={styles.userImage}></View>
+        <View style={styles.userImage} />
         <View>
           <Text style={styles.userIdText}>{board.user.userId}</Text>
           <Text style={styles.createdDateText}>{board.created_at}</Text>
@@ -29,13 +37,13 @@ const Board: FC<BoardProps> = ({board}) => {
           {board.content}
         </Text>
       </View>
-      <View style={styles.footerLine}></View>
+      <View style={styles.footerLine} />
       <View style={styles.footerContainer}>
         <Text style={styles.footerText}>좋아요</Text>
         <Text style={styles.footerText}>│</Text>
         <Text style={styles.footerText}>댓글 {board.comments.length}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

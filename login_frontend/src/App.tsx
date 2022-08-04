@@ -12,6 +12,7 @@ import SignUpScreen from './screens/SignUpScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import bottomTabs from './common/bottomTabs';
+import BoardDetailScreen from './screens/BoardDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ const App: FC = () => {
         initialRouteName="SignIn">
         <Stack.Screen name="SignIn" component={SignInScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
+        <Stack.Screen name="BoardDetail" component={BoardDetailScreen} />
         <Stack.Screen name="bottomTabs" component={bottomTabs} />
       </Stack.Navigator>
     </NavigationContainer>
