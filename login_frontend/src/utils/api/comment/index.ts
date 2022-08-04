@@ -4,4 +4,8 @@ function getComments(id: any) {
   return instance.get(`/comments/board/${id}`);
 }
 
-export {getComments};
+function addComment(commentData: Object) {
+  return instance.post('/comments', commentData);
+}
+
+export {getComments, addComment};

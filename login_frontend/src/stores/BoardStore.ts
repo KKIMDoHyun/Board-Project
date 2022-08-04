@@ -21,6 +21,11 @@ const BoardStore: BoardStoreType = observable({
     this.board = Object.assign({}, board);
   },
 
+  boardOpenStatus: false as boolean,
+  setBoardOpenStatus(status: boolean) {
+    this.boardOpenStatus = status;
+  },
+
   comments: [] as CommentType[],
   setComments(comments: CommentType[]) {
     this.comments = comments;

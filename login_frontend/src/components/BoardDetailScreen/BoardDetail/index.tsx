@@ -5,6 +5,7 @@ import {styles} from './styles';
 import BoardStore from '@/stores/BoardStore';
 
 const BoardDetail: FC = () => {
+  console.log(BoardStore.board);
   return (
     <View style={styles.container}>
       <View style={styles.header}>

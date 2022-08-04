@@ -14,6 +14,7 @@ const BoardData: FC = ({item}) => {
 const BoardList: FC = () => {
   useEffect(() => {
     BoardStore.fetchBoards();
+    console.log(BoardStore.boards);
   }, []);
   return (
     <SafeAreaView style={{flex: 1, width: '100%'}}>

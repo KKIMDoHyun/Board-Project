@@ -1,13 +1,49 @@
+import BoardStore from '@/stores/BoardStore';
+import {addComment} from '@/utils/api/comment';
 import {observer} from 'mobx-react';
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {FC} from 'react';
-import {Text, View} from 'react-native';
+import {Pressable, Text, TextInput, View} from 'react-native';
 import {styles} from './styles';
 
 const CreateComment: FC = () => {
+  const [comment, setComment] = useState('');
+  const commentAddBtn = () => {
+    const commentData = {
+      boardId: BoardStore.board.id,
+      content: comment,
+    };
+    console.log(commentData);
+    addComment(commentData)
+      .then(res => {
+        console.log(res.data);
+        setComment('');
+      })
+      .catch(err => console.log(err));
+  };
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>글 쓰기</Text>
+      <TextInput
+        style={styles.text}
+        onChangeText={text => {
+          setComment(text);
+        }}
+        placeholder="댓글을 입력하세요."
+        value={comment}
+      />
+      <Pressable
+        style={{
+          position: 'absolute',
+          right: 0,
+          borderWidth: 1,
+          borderRadius: 10,
+          padding: 13,
+        }}
+        onPress={() => {
+          commentAddBtn();
+        }}>
+        <Text style={{color: '#000000', fontWeight: '600'}}>입력</Text>
+      </Pressable>
     </View>
   );
 };

@@ -11,45 +11,41 @@ type CommentProps = {
 };
 const Comment: FC<CommentProps> = ({comment}) => {
   const navigation = useNavigation<any>();
-  console.log(comment);
   return (
-    <View>
-      <Text>{comment.content}</Text>
-      <Text>{comment.created_at}</Text>
-      <Text>{comment.user.userId}</Text>
-      <Text>{comment.user.username}</Text>
+    <View
+      style={{
+        flex: 1,
+        marginBottom: 15,
+        borderWidth: 1,
+        height: 100,
+        paddingLeft: 5,
+        paddingTop: 5,
+      }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}>
+        <View
+          style={{
+            borderWidth: 1,
+            borderRadius: 100,
+            width: 35,
+            height: 35,
+            marginRight: 10,
+          }}
+        />
+        <View>
+          <Text style={{color: '#000000'}}>{comment.created_at}</Text>
+          <Text style={{color: '#000000', fontSize: 16}}>
+            {comment.user.userId}
+          </Text>
+        </View>
+      </View>
+      <Text style={{color: '#000000', fontSize: 16, marginTop: 8}}>
+        {comment.content}
+      </Text>
     </View>
-    // <Pressable
-
-    //   style={styles.container}
-    //   onPress={() => {
-    //     BoardStore.setBoard(board);
-    //     navigation.navigate('BoardDetail');
-    //   }}>
-    //   <View style={styles.header}>
-    //     <View style={styles.userImage} />
-    //     <View>
-    //       <Text style={styles.userIdText}>{board.user.userId}</Text>
-    //       <Text style={styles.createdDateText}>{board.created_at}</Text>
-    //     </View>
-    //   </View>
-    //   <View style={styles.titleContainer}>
-    //     <Text style={styles.titleText} numberOfLines={1}>
-    //       {board.title}
-    //     </Text>
-    //   </View>
-    //   <View style={styles.contentContainer}>
-    //     <Text style={styles.contentText} numberOfLines={3}>
-    //       {board.content}
-    //     </Text>
-    //   </View>
-    //   <View style={styles.footerLine} />
-    //   <View style={styles.footerContainer}>
-    //     <Text style={styles.footerText}>좋아요</Text>
-    //     <Text style={styles.footerText}>│</Text>
-    //     <Text style={styles.footerText}>댓글 {board.comments.length}</Text>
-    //   </View>
-    // </Pressable>
   );
 };
 

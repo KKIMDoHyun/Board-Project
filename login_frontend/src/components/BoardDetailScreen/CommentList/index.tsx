@@ -20,7 +20,7 @@ const Comments: FC = () => {
   return (
     <View style={styles.container}>
       <CreateComment />
-      <SafeAreaView style={{width: '100%', marginTop: 20, borderWidth: 1}}>
+      <SafeAreaView style={{flex: 1}}>
         <FlatList
           showsHorizontalScrollIndicator
           data={BoardStore.comments}

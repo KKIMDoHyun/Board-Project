@@ -6,6 +6,9 @@ export type BoardStoreType = {
   board: BoardType;
   setBoard: (board: BoardType) => void;
 
+  boardOpenStatus: boolean;
+  setBoardOpenStatus: (status: boolean) => void;
+
   comments: CommentType[];
   setComments: (comments: CommentType[]) => void;
   fetchComments: (boardId: number) => void;
