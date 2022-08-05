@@ -1,17 +1,21 @@
+import BoardHeader from '@/components/CreateBoardScreen/BoardHeader';
+import Button from '@/components/CreateBoardScreen/Button';
+import Content from '@/components/CreateBoardScreen/Content';
+import Title from '@/components/CreateBoardScreen/Title';
 import {observer} from 'mobx-react';
 import React, {FC} from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {styles} from './styles';
 
 const CreateBoardScreen: FC = () => {
   return (
-    <View
-      style={{
-        height: '100%',
-      }}>
-      <View>
-        <Text>글 작성하기</Text>
+    <View>
+      <View style={styles.container}>
+        <BoardHeader />
+        <Title />
+        <Content />
       </View>
+      <Button />
     </View>
   );
 };

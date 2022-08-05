@@ -50,6 +50,7 @@ export class BoardsService {
   }
 
   async getBoardById(id: number): Promise<Board> {
+    console.log('DDDDDDDDDDDDDDDDDDD');
     const foundBoard = await this.boardRepository
       .createQueryBuilder('br')
       .leftJoinAndSelect('br.user', 'user')

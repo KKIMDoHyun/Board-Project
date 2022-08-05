@@ -1,11 +1,31 @@
 import {observer} from 'mobx-react';
-import React, {FC} from 'react';
+import React, {FC, useCallback, useEffect} from 'react';
 import {Text, View} from 'react-native';
 import {styles} from './styles';
 import BoardStore from '@/stores/BoardStore';
+import {useFocusEffect} from '@react-navigation/native';
+import useSWR from 'swr';
+import axios from 'axios';
 
 const BoardDetail: FC = () => {
-  console.log(BoardStore.board);
+  useFocusEffect(
+    useCallback(() => {
+      // @ts-ignore
+      BoardStore.fetchBoard(BoardStore.selectedBoardId).then(console.log);
+      // BoardStore.fetchComments(BoardStore.selectedBoardId);
+      console.log('Board', BoardStore.board);
+    }, []),
+  );
+
+  if (!BoardStore.board || !BoardStore.board.user) {
+    return null;
+  } else {
+    console.log('DDD', BoardStore.board.user);
+  }
+  // useEffect(() => {
+  //   BoardStore.fetchBoard(BoardStore.selectedBoardId);
+  //   console.log('Board', BoardStore.board);
+  // }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>

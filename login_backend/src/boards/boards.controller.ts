@@ -35,6 +35,7 @@ export class BoardsController {
 
   @Get('/:id')
   getBoardById(@Param('id') id: number): Promise<Board> {
+    console.log('QQQQQQQQQQ');
     return this.boardsService.getBoardById(id);
   }
 

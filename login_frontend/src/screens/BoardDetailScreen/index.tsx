@@ -12,7 +12,7 @@ const BoardDetailScreen: FC = () => {
         height: '100%',
       }}>
       <BoardDetail />
-      <CommentList />
+      {/* <CommentList /> */}
     </View>
   );
 };

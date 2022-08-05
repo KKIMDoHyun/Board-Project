@@ -1,17 +1,25 @@
 export type BoardStoreType = {
-  boards: BoardType[];
-  setBoards: (boards: BoardType[]) => void;
-  fetchBoards: () => void;
+  boardList: BoardType[];
+  setBoardList: (boardList: BoardType[]) => void;
+  fetchBoardList: () => void;
 
+  selectedBoardId: number;
+  setSelectedBoardId: (id: number) => void;
   board: BoardType;
   setBoard: (board: BoardType) => void;
-
-  boardOpenStatus: boolean;
-  setBoardOpenStatus: (status: boolean) => void;
+  fetchBoard: (boardId: number) => void;
 
   comments: CommentType[];
   setComments: (comments: CommentType[]) => void;
   fetchComments: (boardId: number) => void;
+
+  boardTitle: string;
+  setBoardTitle: (title: string) => void;
+  boardContent: string;
+  setBoardContent: (content: string) => void;
+  boardStatus: BoardStatusType;
+  setBoardStatus: (status: BoardStatusType) => void;
+  setBoardClear: () => void;
 };
 
 export type BoardType = {

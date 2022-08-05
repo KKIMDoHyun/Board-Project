@@ -11,15 +11,18 @@ type BoardProps = {
   board: BoardType;
 };
 const Board: FC<BoardProps> = ({board}) => {
+  const navigation = useNavigation<any>();
+
   return (
     <Pressable
       style={styles.container}
       onPress={() => {
-        const {comments, ...new_board} = board;
+        // const {comments, ...new_board} = board;
         // BoardStore.setBoard(new_board);
-        BoardStore.setBoard(board);
-        console.log(BoardStore.board);
-        // navigation.navigate('BoardDetail');
+        // BoardStore.setBoard(board);
+        // console.log(BoardStore.board);
+        BoardStore.setSelectedBoardId(board.id);
+        navigation.navigate('BoardDetail');
       }}>
       <View style={styles.header}>
         <View style={styles.userImage} />

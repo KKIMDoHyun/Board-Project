@@ -14,9 +14,9 @@ const CommentData: FC = ({item}) => {
 };
 
 const Comments: FC = () => {
-  useEffect(() => {
-    BoardStore.fetchComments(BoardStore.board.id);
-  }, []);
+  // useEffect(() => {
+  //   BoardStore.fetchComments(BoardStore.board.id);
+  // }, []);
   return (
     <View style={styles.container}>
       <CreateComment />
