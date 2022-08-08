@@ -42,7 +42,7 @@ const LoginButton: FC = () => {
             }
             console.log('로그인 성공');
             UserStore.clearSignInInput();
-            navigation.navigate('BottomTabs');
+            navigation.replace('BottomTabs');
           }
         })
         .catch(err => {

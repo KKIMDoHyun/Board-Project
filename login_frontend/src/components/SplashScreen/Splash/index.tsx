@@ -19,6 +19,16 @@ const Splash: FC = () => {
               refreshToken: value,
             });
             UserStore.setAccessToken(res.data.accessToken);
+            const {id, userId, username, email, created_at, gender} =
+              res.data.user;
+            UserStore.setUserInfo({
+              id,
+              userId,
+              username,
+              email,
+              created_at,
+              gender,
+            });
             UserStore.setRefreshToken(value);
             console.log('[Splash Component] Refresh Token Auth Complete');
             navigation.replace('BottomTabs');

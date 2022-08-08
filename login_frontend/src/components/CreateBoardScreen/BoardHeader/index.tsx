@@ -1,7 +1,7 @@
 import BoardStore from '@/stores/BoardStore';
 import UserStore from '@/stores/UserStore';
 import {observer} from 'mobx-react';
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {Pressable, Text, View} from 'react-native';
 import {styles} from './styles';
 

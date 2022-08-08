@@ -11,12 +11,13 @@ const CreateComment: FC = () => {
   const commentAddBtn = () => {
     const commentData = {
       boardId: BoardStore.board.id,
-      content: comment,
+      _content: comment,
     };
-    console.log(commentData);
     addComment(commentData)
       .then(res => {
-        console.log(res.data);
+        console.log('AddComment', res.data);
+        // BoardStore.setComments(res.data);
+        BoardStore.addComment(res.data);
         setComment('');
       })
       .catch(err => console.log(err));

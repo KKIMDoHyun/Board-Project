@@ -27,9 +27,13 @@ const UserStore: UserStoreType = observable({
     this.refreshToken = token;
   },
 
+  id: 0,
+  setId(id: number) {
+    this.id = id;
+  },
   userId: '',
-  setUserId(id: string) {
-    this.userId = id;
+  setUserId(userId: string) {
+    this.userId = userId;
   },
   email: 'string',
   setEmail(emailFront: string, emailBack: string) {

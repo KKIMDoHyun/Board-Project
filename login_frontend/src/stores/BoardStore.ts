@@ -33,33 +33,29 @@ const BoardStore: BoardStoreType = observable({
     this.board = board;
   },
   async fetchBoard(boardId: number) {
-    console.log('BoardStore.fetchBoard() start');
+    // console.log('BoardStore.fetchBoard() start');
     await getBoardById(boardId)
       .then(res => {
-        console.log('fetching', res.data);
-        // console.log('fetchBoard Success');
-        // const {comments, ...newBoard} = res.data;
         this.setBoard(res.data);
-        // console.log('setBoard', this.board);
-        // getComments(boardId)
-        //   .then(res => {
-        //     this.setComments(res.data);
-        //   })
-        //   .catch(err => console.log(err.response.data));
       })
       .catch(err => console.log(err));
     console.log('BoardStore.fetchBoard() end', this.board);
   },
   comments: [] as CommentType[],
   setComments(comments: CommentType[]) {
-    // this.comments = comments;
-    this.board.comments = comments;
-    console.log(this.board);
+    this.comments = comments;
   },
-  fetchComments(boardId: number) {
-    getComments(boardId)
-      .then(res => this.setComments(res.data))
+  async fetchComments(boardId: number) {
+    await getComments(boardId)
+      .then(res => {
+        this.setComments(res.data);
+      })
       .catch(err => console.log(err.response.data));
+    console.log('BoardStore.fetchComments() end', this.comments);
+  },
+  addComment(comment: CommentType) {
+    this.comments.unshift(comment);
+    console.log(this.comments);
   },
 
   boardTitle: '',

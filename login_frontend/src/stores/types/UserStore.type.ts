@@ -13,8 +13,10 @@ export type UserStoreType = {
   refreshToken: string;
   setRefreshToken: (token: string) => void;
 
+  id: number;
+  setId: (id: number) => void;
   userId: string;
-  setUserId: (id: string) => void;
+  setUserId: (userId: string) => void;
   email: string;
   setEmail: (emailFront: string, emailBack: string) => void;
   emailFront: string;

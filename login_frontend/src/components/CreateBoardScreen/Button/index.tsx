@@ -10,7 +10,6 @@ import {styles} from './styles';
 const Button: FC = () => {
   const navigation = useNavigation<any>();
   const submitBoard = () => {
-    console.log('제출');
     const boardData = {
       title: BoardStore.boardTitle,
       content: BoardStore.boardContent,
@@ -18,8 +17,6 @@ const Button: FC = () => {
     };
     createBoard(boardData)
       .then(res => {
-        console.log(res.data);
-        BoardStore.setBoardClear();
         navigation.navigate('BottomTabs');
       })
       .catch(err => console.log(err));

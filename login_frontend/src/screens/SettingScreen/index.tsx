@@ -30,7 +30,7 @@ const SettingScreen: FC = () => {
             .then(res => {
               if (res.status === 201) {
                 AsyncStorage.removeItem('refreshToken');
-                navigation.navigate('SignIn');
+                navigation.replace('SignIn');
               }
             })
             .catch(function (error) {

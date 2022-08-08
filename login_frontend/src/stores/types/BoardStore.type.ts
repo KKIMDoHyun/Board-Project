@@ -12,6 +12,7 @@ export type BoardStoreType = {
   comments: CommentType[];
   setComments: (comments: CommentType[]) => void;
   fetchComments: (boardId: number) => void;
+  addComment: (board: CommentType) => void;
 
   boardTitle: string;
   setBoardTitle: (title: string) => void;

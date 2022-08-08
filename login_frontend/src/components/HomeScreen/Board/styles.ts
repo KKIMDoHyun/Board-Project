@@ -3,17 +3,36 @@ import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    marginBottom: 30,
-    paddingRight: 10,
-    paddingLeft: 10,
+    borderWidth: 2,
+    marginBottom: 20,
     height: 250,
   },
-  header: {
+  headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
     paddingTop: 10,
+    paddingLeft: 10,
+  },
+  bodyContainer: {
+    marginTop: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  titleContainer: {
+    borderBottomWidth: 1,
+  },
+  contentContainer: {
+    marginTop: 7,
+    height: 100,
+  },
+  footerLine: {
+    borderBottomWidth: 2,
+  },
+  footerContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
   },
   userImage: {
     borderWidth: 1,
@@ -22,24 +41,6 @@ export const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: 'white',
     marginRight: 10,
-  },
-  titleContainer: {
-    borderBottomWidth: 1,
-    marginTop: 7,
-  },
-  contentContainer: {
-    marginTop: 7,
-    height: 80,
-  },
-  footerLine: {
-    borderBottomWidth: 1,
-    marginTop: 20,
-  },
-  footerContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
   },
   userIdText: {
     color: '#000000',

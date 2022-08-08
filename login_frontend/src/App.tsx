@@ -28,7 +28,11 @@ const App: FC = () => {
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="SignIn" component={SignInScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="BoardDetail" component={BoardDetailScreen} />
+        <Stack.Screen
+          name="BoardDetail"
+          component={BoardDetailScreen}
+          options={{title: '게시글', headerShown: true}}
+        />
         <Stack.Screen
           name="CreateBoard"
           component={CreateBoardScreen}

@@ -2,15 +2,15 @@ import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    borderWidth: 2,
-    marginVertical: 20,
-    height: 50,
-    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    height: 60,
     justifyContent: 'center',
-    paddingLeft: 10,
-    borderRadius: 20,
+    backgroundColor: '#e2f5e1',
   },
   text: {
+    marginLeft: 10,
     color: '#000000',
+    fontSize: 30,
+    fontWeight: '700',
   },
 });

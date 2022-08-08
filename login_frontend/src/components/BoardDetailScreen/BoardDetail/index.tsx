@@ -8,24 +8,22 @@ import useSWR from 'swr';
 import axios from 'axios';
 
 const BoardDetail: FC = () => {
-  useFocusEffect(
-    useCallback(() => {
-      // @ts-ignore
-      BoardStore.fetchBoard(BoardStore.selectedBoardId).then(console.log);
-      // BoardStore.fetchComments(BoardStore.selectedBoardId);
-      console.log('Board', BoardStore.board);
-    }, []),
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // @ts-ignore
+  //     BoardStore.fetchBoard(BoardStore.selectedBoardId);
+  //     // BoardStore.fetchComments(BoardStore.selectedBoardId);
+  //     console.log('Board', BoardStore.board);
+  //   }, []),
+  // );
 
   if (!BoardStore.board || !BoardStore.board.user) {
+    console.log('null');
     return null;
   } else {
     console.log('DDD', BoardStore.board.user);
   }
-  // useEffect(() => {
-  //   BoardStore.fetchBoard(BoardStore.selectedBoardId);
-  //   console.log('Board', BoardStore.board);
-  // }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -38,9 +36,7 @@ const BoardDetail: FC = () => {
         </View>
       </View>
       <View style={styles.titleContainer}>
-        <Text style={styles.titleText} numberOfLines={1}>
-          {BoardStore.board.title}
-        </Text>
+        <Text style={styles.titleText}>{BoardStore.board.title}</Text>
       </View>
       <View style={styles.titleUnderLine} />
       <View style={styles.contentContainer}>
@@ -49,9 +45,7 @@ const BoardDetail: FC = () => {
       <View style={styles.footerContainer}>
         <Text style={styles.footerText}>좋아요</Text>
         <Text style={styles.footerText}>│</Text>
-        <Text style={styles.footerText}>
-          댓글 {BoardStore.board.comments.length}
-        </Text>
+        <Text style={styles.footerText}>댓글 {BoardStore.comments.length}</Text>
       </View>
     </View>
   );

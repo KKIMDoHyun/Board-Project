@@ -14,13 +14,10 @@ const CommentData: FC = ({item}) => {
 };
 
 const Comments: FC = () => {
-  // useEffect(() => {
-  //   BoardStore.fetchComments(BoardStore.board.id);
-  // }, []);
   return (
     <View style={styles.container}>
       <CreateComment />
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={styles.container}>
         <FlatList
           showsHorizontalScrollIndicator
           data={BoardStore.comments}

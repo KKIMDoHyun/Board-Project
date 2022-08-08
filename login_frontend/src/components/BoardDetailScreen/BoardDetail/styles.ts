@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     width: '100%',
     height: 360,
-    marginTop: 100,
+    marginTop: 20,
     backgroundColor: '#FFFFFF',
   },
   header: {
