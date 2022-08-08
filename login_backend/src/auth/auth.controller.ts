@@ -71,7 +71,14 @@ export class AuthController {
   async refresh(@Req() req) {
     const user = req.user;
     const { accessToken } = await this.authService.getJwtAccessToken(user.id);
-    return { accessToken: accessToken };
+    const {
+      password,
+      currentHashedRefreshToken,
+      boards,
+      comments,
+      ...remainUser
+    } = user;
+    return { accessToken: accessToken, user: remainUser };
   }
 
   @Post('/logout')

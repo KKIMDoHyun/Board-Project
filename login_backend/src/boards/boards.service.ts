@@ -45,6 +45,7 @@ export class BoardsService {
         'user.username',
         'comments',
       ])
+      .orderBy('br.created_at', 'DESC')
       .getMany();
     return board;
   }

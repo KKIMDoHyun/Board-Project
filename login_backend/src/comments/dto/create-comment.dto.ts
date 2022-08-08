@@ -5,5 +5,5 @@ export class CreateCommentDto {
   boardId: number;
 
   @IsNotEmpty()
-  content: string;
+  _content: string;
 }

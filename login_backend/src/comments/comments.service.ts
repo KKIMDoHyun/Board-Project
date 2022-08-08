@@ -19,17 +19,20 @@ export class CommentsService {
     createCommentDto: CreateCommentDto,
     user: User,
   ): Promise<Comment> {
-    const { boardId, content } = createCommentDto;
+    const { boardId, _content } = createCommentDto;
     const board = await this.boardRepository.findOne(boardId);
     if (!board) {
       throw new NotFoundException(
         `id가 ${boardId}인 게시글을 찾을 수 없습니다.`,
       );
     }
+    const { id, userId, email, username, ...remainUser } = user;
+    const { title, content, status, created_at, comments, ...remainBoard } =
+      board;
     const comment = await this.commentRepository.create({
-      user,
-      board,
-      content,
+      user: { id, userId, email, username },
+      board: remainBoard,
+      content: _content,
     });
     await this.commentRepository.save(comment);
     return comment;
@@ -49,6 +52,7 @@ export class CommentsService {
         'board.id',
       ])
       .where('board.id = :id', { id })
+      .orderBy('cr.created_at', 'DESC')
       .getMany();
 
     return comments;
