@@ -1,6 +1,7 @@
 import AdditionalFuncStore from '@/stores/additionalFuncStore';
 import UserStore from '@/stores/UserStore';
 import {signIn} from '@/utils/api/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {observer} from 'mobx-react';
 import React, {FC} from 'react';
@@ -35,9 +36,13 @@ const LoginButton: FC = () => {
               created_at,
               gender,
             });
+            // 자동로그인
+            if (UserStore.autoLoginToggle) {
+              AsyncStorage.setItem('refreshToken', UserStore.refreshToken);
+            }
             console.log('로그인 성공');
             UserStore.clearSignInInput();
-            navigation.navigate('bottomTabs');
+            navigation.navigate('BottomTabs');
           }
         })
         .catch(err => {

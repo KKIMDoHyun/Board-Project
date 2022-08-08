@@ -7,5 +7,5 @@ db:
   database: 'project'
 
 jwt:
-  accessToken_expiresIn: 30000
+  accessToken_expiresIn: 30
   refreshToken_expiresIn: 604800

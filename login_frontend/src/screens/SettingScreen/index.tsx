@@ -1,6 +1,7 @@
 // import {getProfile} from '@/utils/api/auth';
 import {instance} from '@/utils/api';
 import {getProfile} from '@/utils/api/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {observer} from 'mobx-react';
 import React, {FC} from 'react';
@@ -8,7 +9,7 @@ import {Pressable, Text, View} from 'react-native';
 import {styles} from './styles';
 
 const SettingScreen: FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   return (
     <View style={styles.container}>
@@ -27,8 +28,8 @@ const SettingScreen: FC = () => {
           instance
             .post('/auth/logout')
             .then(res => {
-              // console.log(res);
               if (res.status === 201) {
+                AsyncStorage.removeItem('refreshToken');
                 navigation.navigate('SignIn');
               }
             })

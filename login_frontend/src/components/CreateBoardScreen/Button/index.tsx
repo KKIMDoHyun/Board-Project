@@ -20,7 +20,7 @@ const Button: FC = () => {
       .then(res => {
         console.log(res.data);
         BoardStore.setBoardClear();
-        navigation.navigate('bottomTabs');
+        navigation.navigate('BottomTabs');
       })
       .catch(err => console.log(err));
   };
