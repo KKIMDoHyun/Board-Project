@@ -10,13 +10,23 @@ export const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     paddingTop: 10,
     paddingLeft: 10,
+  },
+  infoContainer: {
+    flexDirection: 'row',
   },
   bodyContainer: {
     marginTop: 10,
     paddingLeft: 10,
     paddingRight: 10,
+  },
+  modifyBtnContainer: {
+    borderWidth: 1,
+    padding: 8,
+    alignSelf: 'flex-start',
+    marginRight: 8,
   },
   titleContainer: {
     borderBottomWidth: 1,

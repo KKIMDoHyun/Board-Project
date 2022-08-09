@@ -14,6 +14,8 @@ export type BoardStoreType = {
   fetchComments: (boardId: number) => void;
   addComment: (board: CommentType) => void;
 
+  boardId: number;
+  setBoardId: (boardId: number) => void;
   boardTitle: string;
   setBoardTitle: (title: string) => void;
   boardContent: string;
@@ -21,6 +23,9 @@ export type BoardStoreType = {
   boardStatus: BoardStatusType;
   setBoardStatus: (status: BoardStatusType) => void;
   setBoardClear: () => void;
+
+  boardModifyMode: boolean;
+  setBoardModifyMode: (mode: boolean) => void;
 };
 
 export type BoardType = {

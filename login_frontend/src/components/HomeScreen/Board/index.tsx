@@ -1,5 +1,6 @@
 import BoardStore from '@/stores/BoardStore';
 import {BoardType} from '@/stores/types/BoardStore.type';
+import UserStore from '@/stores/UserStore';
 import {useNavigation} from '@react-navigation/native';
 import {observer} from 'mobx-react';
 import React from 'react';
@@ -15,11 +16,27 @@ const Board: FC<BoardProps> = ({board}) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <View style={styles.userImage} />
-        <View>
-          <Text style={styles.userIdText}>{board.user.userId}</Text>
-          <Text style={styles.createdDateText}>{board.created_at}</Text>
+        <View style={styles.infoContainer}>
+          <View style={styles.userImage} />
+          <View>
+            <Text style={styles.userIdText}>{board.user.userId}</Text>
+            <Text style={styles.createdDateText}>{board.created_at}</Text>
+          </View>
         </View>
+        {board.user.userId === UserStore.userInfo.userId ? (
+          <Pressable
+            onPress={() => {
+              BoardStore.setBoardId(board.id);
+              BoardStore.setBoardStatus(board.status);
+              BoardStore.setBoardTitle(board.title);
+              BoardStore.setBoardContent(board.content);
+              BoardStore.setBoardModifyMode(true);
+              navigation.navigate('CreateBoard');
+            }}
+            style={styles.modifyBtnContainer}>
+            <Text>수정하기</Text>
+          </Pressable>
+        ) : null}
       </View>
       <Pressable
         style={styles.bodyContainer}

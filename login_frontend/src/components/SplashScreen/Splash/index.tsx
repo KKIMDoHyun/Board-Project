@@ -29,6 +29,7 @@ const Splash: FC = () => {
               created_at,
               gender,
             });
+            console.log(UserStore.userInfo);
             UserStore.setRefreshToken(value);
             console.log('[Splash Component] Refresh Token Auth Complete');
             navigation.replace('BottomTabs');

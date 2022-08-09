@@ -58,6 +58,10 @@ const BoardStore: BoardStoreType = observable({
     console.log(this.comments);
   },
 
+  boardId: 0,
+  setBoardId(boardId: number) {
+    this.boardId = boardId;
+  },
   boardTitle: '',
   setBoardTitle(title: string) {
     this.boardTitle = title;
@@ -74,6 +78,11 @@ const BoardStore: BoardStoreType = observable({
     this.setBoardTitle('');
     this.setBoardContent('');
     this.setBoardStatus('PUBLIC');
+  },
+
+  boardModifyMode: false as boolean,
+  setBoardModifyMode(mode: boolean) {
+    this.boardModifyMode = mode;
   },
 });
 

@@ -1,5 +1,5 @@
 import BoardStore from '@/stores/BoardStore';
-import {createBoard} from '@/utils/api/board';
+import {createBoard, modifyBoard} from '@/utils/api/board';
 import {useNavigation} from '@react-navigation/native';
 import {observer} from 'mobx-react';
 import React from 'react';
@@ -15,11 +15,19 @@ const Button: FC = () => {
       content: BoardStore.boardContent,
       status: BoardStore.boardStatus,
     };
-    createBoard(boardData)
-      .then(res => {
-        navigation.navigate('BottomTabs');
-      })
-      .catch(err => console.log(err));
+    if (BoardStore.boardModifyMode) {
+      modifyBoard(BoardStore.boardId, boardData)
+        .then(res => {
+          navigation.navigate('BottomTabs');
+        })
+        .catch(err => console.log(err));
+    } else {
+      createBoard(boardData)
+        .then(res => {
+          navigation.navigate('BottomTabs');
+        })
+        .catch(err => console.log(err));
+    }
   };
   return (
     <Pressable
