@@ -24,6 +24,9 @@ export type BoardStoreType = {
   setBoardStatus: (status: BoardStatusType) => void;
   setBoardClear: () => void;
 
+  deleteBoardModalVisible: boolean;
+  setDeleteBoardModalVisible: (visible: boolean) => void;
+  deleteBoard: (boardId: number) => void;
   boardModifyMode: boolean;
   setBoardModifyMode: (mode: boolean) => void;
 };

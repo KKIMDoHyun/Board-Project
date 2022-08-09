@@ -16,4 +16,8 @@ function getBoardById(id: number) {
   return instance.get(`/boards/${id}`);
 }
 
-export {getAllBoards, getBoardById, createBoard, modifyBoard};
+function deleteBoardById(id: number) {
+  return instance.delete(`/boards/${id}`);
+}
+
+export {getAllBoards, modifyBoard, getBoardById, createBoard, deleteBoardById};

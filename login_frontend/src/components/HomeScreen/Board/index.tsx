@@ -1,9 +1,10 @@
+import DeleteBoardModal from '@/components/Modal/DeleteBoardModal';
 import BoardStore from '@/stores/BoardStore';
 import {BoardType} from '@/stores/types/BoardStore.type';
 import UserStore from '@/stores/UserStore';
 import {useNavigation} from '@react-navigation/native';
 import {observer} from 'mobx-react';
-import React from 'react';
+import React, {useState} from 'react';
 import {FC} from 'react';
 import {Pressable, Text, View} from 'react-native';
 import {styles} from './styles';
@@ -24,18 +25,29 @@ const Board: FC<BoardProps> = ({board}) => {
           </View>
         </View>
         {board.user.userId === UserStore.userInfo.userId ? (
-          <Pressable
-            onPress={() => {
-              BoardStore.setBoardId(board.id);
-              BoardStore.setBoardStatus(board.status);
-              BoardStore.setBoardTitle(board.title);
-              BoardStore.setBoardContent(board.content);
-              BoardStore.setBoardModifyMode(true);
-              navigation.navigate('CreateBoard');
-            }}
-            style={styles.modifyBtnContainer}>
-            <Text>수정하기</Text>
-          </Pressable>
+          <View style={{flexDirection: 'row'}}>
+            <Pressable
+              onPress={() => {
+                BoardStore.setBoardId(board.id);
+                BoardStore.setBoardStatus(board.status);
+                BoardStore.setBoardTitle(board.title);
+                BoardStore.setBoardContent(board.content);
+                BoardStore.setBoardModifyMode(true);
+                navigation.navigate('CreateBoard');
+              }}
+              style={styles.modifyBtnContainer}>
+              <Text>수정하기</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                // BoardStore.deleteBoard(board.id);
+                BoardStore.setBoardId(board.id);
+                BoardStore.setDeleteBoardModalVisible(true);
+              }}
+              style={styles.modifyBtnContainer}>
+              <Text>삭제하기</Text>
+            </Pressable>
+          </View>
         ) : null}
       </View>
       <Pressable

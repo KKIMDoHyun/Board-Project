@@ -1,4 +1,4 @@
-import {getAllBoards, getBoardById} from '@/utils/api/board';
+import {deleteBoardById, getAllBoards, getBoardById} from '@/utils/api/board';
 import {getComments} from '@/utils/api/comment';
 import {observable} from 'mobx';
 import {
@@ -33,7 +33,7 @@ const BoardStore: BoardStoreType = observable({
     this.board = board;
   },
   async fetchBoard(boardId: number) {
-    // console.log('BoardStore.fetchBoard() start');
+    console.log('BoardStore.fetchBoard() start');
     await getBoardById(boardId)
       .then(res => {
         this.setBoard(res.data);
@@ -78,6 +78,19 @@ const BoardStore: BoardStoreType = observable({
     this.setBoardTitle('');
     this.setBoardContent('');
     this.setBoardStatus('PUBLIC');
+  },
+
+  deleteBoardModalVisible: false as boolean,
+  setDeleteBoardModalVisible(visible: boolean) {
+    this.deleteBoardModalVisible = visible;
+  },
+  deleteBoard(boardId: number) {
+    deleteBoardById(boardId).then(() => {
+      this.boardList.splice(
+        this.boardList.findIndex(i => i.id === boardId),
+        1,
+      );
+    });
   },
 
   boardModifyMode: false as boolean,

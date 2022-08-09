@@ -21,11 +21,11 @@ export class BoardsService {
     createBoardDto: CreateBoardDto,
     user: User,
   ): Promise<Board> {
-    const { title, content } = createBoardDto;
+    const { title, content, status } = createBoardDto;
     const board = await this.boardRepository.create({
       title,
       content,
-      status: BoardStatus.PUBLIC,
+      status,
       user,
     });
     await this.boardRepository.save(board);

@@ -35,6 +35,8 @@ export class Board extends BaseEntity {
   user: User;
 
   // board 1 : N Comment
-  @OneToMany(() => Comment, (comment) => comment.board, { eager: true })
+  @OneToMany(() => Comment, (comment) => comment.board, {
+    eager: true,
+  })
   comments: Comment[];
 }

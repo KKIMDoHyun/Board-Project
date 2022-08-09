@@ -26,7 +26,10 @@ export class Comment extends BaseEntity {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => Board, (board) => board.comments, { eager: false })
+  @ManyToOne(() => Board, (board) => board.comments, {
+    eager: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'board_id' })
   board: Board;
 }
