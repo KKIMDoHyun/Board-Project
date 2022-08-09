@@ -40,7 +40,6 @@ const Board: FC<BoardProps> = ({board}) => {
             </Pressable>
             <Pressable
               onPress={() => {
-                // BoardStore.deleteBoard(board.id);
                 BoardStore.setBoardId(board.id);
                 BoardStore.setDeleteBoardModalVisible(true);
               }}

@@ -10,6 +10,7 @@ import {styles} from './styles';
 
 const CreateBoardScreen: FC = () => {
   useEffect(() => {
+    console.log(BoardStore.boardModifyMode);
     return () => {
       BoardStore.setBoardClear();
     };

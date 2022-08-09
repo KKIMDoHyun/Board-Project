@@ -78,6 +78,7 @@ const BoardStore: BoardStoreType = observable({
     this.setBoardTitle('');
     this.setBoardContent('');
     this.setBoardStatus('PUBLIC');
+    this.setBoardModifyMode(false);
   },
 
   deleteBoardModalVisible: false as boolean,
