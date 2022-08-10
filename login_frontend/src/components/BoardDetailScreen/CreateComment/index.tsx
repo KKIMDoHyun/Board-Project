@@ -16,8 +16,8 @@ const CreateComment: FC = () => {
     addComment(commentData)
       .then(res => {
         console.log('AddComment', res.data);
-        // BoardStore.setComments(res.data);
-        BoardStore.addComment(res.data);
+        const comments = [res.data, ...BoardStore.comments];
+        BoardStore.setComments(comments);
         setComment('');
       })
       .catch(err => console.log(err));

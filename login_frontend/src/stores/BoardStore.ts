@@ -53,10 +53,6 @@ const BoardStore: BoardStoreType = observable({
       .catch(err => console.log(err.response.data));
     console.log('BoardStore.fetchComments() end', this.comments);
   },
-  addComment(comment: CommentType) {
-    this.comments.unshift(comment);
-    console.log(this.comments);
-  },
 
   boardId: 0,
   setBoardId(boardId: number) {
