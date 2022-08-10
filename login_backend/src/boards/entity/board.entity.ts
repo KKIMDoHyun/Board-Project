@@ -1,5 +1,6 @@
 import { User } from 'src/auth/entity/user.entity';
 import { Comment } from 'src/comments/entity/comment.entity';
+import { Good } from 'src/good/entity/good.entity';
 import {
   BaseEntity,
   Column,
@@ -39,4 +40,9 @@ export class Board extends BaseEntity {
     eager: true,
   })
   comments: Comment[];
+
+  @OneToMany(() => Good, (good) => good.board, {
+    eager: true,
+  })
+  goodList: Good[];
 }

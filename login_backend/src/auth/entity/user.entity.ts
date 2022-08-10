@@ -1,6 +1,7 @@
 import { Exclude } from 'class-transformer';
 import { Board } from 'src/boards/entity/board.entity';
 import { Comment } from 'src/comments/entity/comment.entity';
+import { Good } from 'src/good/entity/good.entity';
 import {
   BaseEntity,
   Column,
@@ -51,4 +52,9 @@ export class User extends BaseEntity {
   // // user 1 : N Comment
   @OneToMany(() => Comment, (comment) => comment.user, { eager: true })
   comments: Comment[];
+
+  @OneToMany(() => Good, (good) => good.user, {
+    eager: true,
+  })
+  goodList: Good[];
 }

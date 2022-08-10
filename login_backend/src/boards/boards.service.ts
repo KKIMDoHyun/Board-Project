@@ -37,6 +37,7 @@ export class BoardsService {
       .createQueryBuilder('br')
       .leftJoinAndSelect('br.user', 'user')
       .leftJoinAndSelect('br.comments', 'comments')
+      .leftJoinAndSelect('br.goodList', 'good')
       .select([
         'br',
         'user.id',
@@ -44,6 +45,7 @@ export class BoardsService {
         'user.email',
         'user.username',
         'comments',
+        'good',
       ])
       .orderBy('br.created_at', 'DESC')
       .getMany();
@@ -51,11 +53,11 @@ export class BoardsService {
   }
 
   async getBoardById(id: number): Promise<Board> {
-    console.log('DDDDDDDDDDDDDDDDDDD');
     const foundBoard = await this.boardRepository
       .createQueryBuilder('br')
       .leftJoinAndSelect('br.user', 'user')
       .leftJoinAndSelect('br.comments', 'comments')
+      .leftJoinAndSelect('br.goodList', 'good')
       .select([
         'br',
         'user.id',
@@ -63,6 +65,7 @@ export class BoardsService {
         'user.email',
         'user.username',
         'comments',
+        'good',
       ])
       .where('br.id = :id', { id })
       .getOne();

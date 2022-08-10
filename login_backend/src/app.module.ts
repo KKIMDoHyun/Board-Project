@@ -9,6 +9,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { BoardsModule } from './boards/boards.module';
 import { CommentsModule } from './comments/comments.module';
+import { GoodModule } from './good/good.module';
 
 const dbConfig = config.get('db');
 
@@ -28,6 +29,7 @@ const dbConfig = config.get('db');
     UserModule,
     BoardsModule,
     CommentsModule,
+    GoodModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],
