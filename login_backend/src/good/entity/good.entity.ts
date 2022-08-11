@@ -14,14 +14,14 @@ export class Good extends BaseEntity {
   id: number;
 
   @ManyToOne(() => Board, (board) => board.goodList, {
-    eager: false,
+    eager: true,
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'board_id' })
   board: Board;
 
   @ManyToOne(() => User, (user) => user.goodList, {
-    eager: false,
+    eager: true,
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'user_id' })

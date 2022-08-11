@@ -68,7 +68,12 @@ const Board: FC<BoardProps> = ({board}) => {
       </Pressable>
       <View style={styles.footerLine} />
       <View style={styles.footerContainer}>
-        <Text style={styles.footerText}>좋아요</Text>
+        <Pressable
+          onPress={() => {
+            console.log('좋아요');
+          }}>
+          <Text style={styles.footerText}>좋아요</Text>
+        </Pressable>
         <Text style={styles.footerText}>│</Text>
         <Text style={styles.footerText}>댓글 {board.comments.length}</Text>
       </View>

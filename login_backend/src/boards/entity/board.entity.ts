@@ -42,7 +42,7 @@ export class Board extends BaseEntity {
   comments: Comment[];
 
   @OneToMany(() => Good, (good) => good.board, {
-    eager: true,
+    eager: false,
   })
   goodList: Good[];
 }

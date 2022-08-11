@@ -6,12 +6,14 @@ import { BoardsController } from './boards.controller';
 import { BoardsService } from './boards.service';
 import { Board } from './entity/board.entity';
 import { Comment } from 'src/comments/entity/comment.entity';
+import { Good } from 'src/good/entity/good.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Board]),
     AuthModule,
     TypeOrmModule.forFeature([Comment]),
+    TypeOrmModule.forFeature([Good]),
   ],
   controllers: [BoardsController],
   providers: [BoardsService],

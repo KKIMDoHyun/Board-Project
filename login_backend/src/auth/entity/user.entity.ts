@@ -54,7 +54,7 @@ export class User extends BaseEntity {
   comments: Comment[];
 
   @OneToMany(() => Good, (good) => good.user, {
-    eager: true,
+    eager: false,
   })
   goodList: Good[];
 }
