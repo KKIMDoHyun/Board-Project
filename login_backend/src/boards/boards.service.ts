@@ -21,10 +21,7 @@ export class BoardsService {
     private readonly goodRepository: Repository<Good>,
   ) {}
 
-  async createBoard(
-    createBoardDto: CreateBoardDto,
-    user: User,
-  ): Promise<Board> {
+  async createBoard(createBoardDto: CreateBoardDto, user: User): Promise<void> {
     const { title, content, status } = createBoardDto;
     const board = await this.boardRepository.create({
       title,
@@ -33,7 +30,6 @@ export class BoardsService {
       user,
     });
     await this.boardRepository.save(board);
-    return board;
   }
 
   async getAllBoards(): Promise<Board[]> {
@@ -59,28 +55,35 @@ export class BoardsService {
     return board;
   }
 
-  async getBoardById(id: number): Promise<Board> {
-    const foundBoard = await this.boardRepository
-      .createQueryBuilder('br')
-      .leftJoinAndSelect('br.user', 'user')
-      .leftJoinAndSelect('br.comments', 'comments')
-      .leftJoinAndSelect('br.goodList', 'good')
-      .select([
-        'br',
-        'user.id',
-        'user.userId',
-        'user.email',
-        'user.username',
-        'comments',
-        'good',
-      ])
-      .where('br.id = :id', { id })
-      .getOne();
-
+  async getBoardById(id: number) {
+    const foundBoard = await this.boardRepository.find({
+      relations: ['user', 'comments'],
+    });
+    // const foundBoard = await this.boardRepository
+    //   .createQueryBuilder('br')
+    //   .leftJoinAndSelect('br.user', 'user')
+    //   .leftJoinAndSelect('br.comments', 'comments')
+    //   // .leftJoinAndSelect('br.goodList', 'good')
+    //   .select([
+    //     'br',
+    //     'user.id',
+    //     'user.userId',
+    //     'user.email',
+    //     'user.username',
+    //     'comments',
+    //     // 'good',
+    //   ])
+    //   .where('br.id = :id', { id })
+    //   .getOne();
     if (!foundBoard) {
       throw new NotFoundException(`id가 ${id}인 게시글을 찾을 수 없습니다.`);
     }
-    return foundBoard;
+    const goodList = await this.goodRepository.find({
+      // select: [],
+      // relations: ['user'],
+    });
+    console.log(goodList);
+    return { foundBoard, goodList };
   }
 
   async deleteAllBoard(): Promise<void> {
@@ -115,10 +118,10 @@ export class BoardsService {
     return board;
   }
 
-  async updateBoardStatus(id: number, status: BoardStatus): Promise<Board> {
-    const board = await this.getBoardById(id);
-    board.status = status;
-    await this.boardRepository.save(board);
-    return board;
-  }
+  // async updateBoardStatus(id: number, status: BoardStatus): Promise<Board> {
+  //   const board = await this.getBoardById(id);
+  //   board.status = status;
+  //   await this.boardRepository.save(board);
+  //   return board;
+  // }
 }

@@ -24,7 +24,7 @@ export class BoardsController {
   createBoard(
     @Body() createBoardDto: CreateBoardDto,
     @GetUser() user: User,
-  ): Promise<Board> {
+  ): Promise<void> {
     return this.boardsService.createBoard(createBoardDto, user);
   }
 
@@ -34,8 +34,7 @@ export class BoardsController {
   }
 
   @Get('/:id')
-  getBoardById(@Param('id') id: number): Promise<Board> {
-    console.log('QQQQQQQQQQ');
+  getBoardById(@Param('id') id: number) {
     return this.boardsService.getBoardById(id);
   }
 
@@ -60,11 +59,11 @@ export class BoardsController {
     return this.boardsService.updateBoard(id, boardDto, status, user);
   }
 
-  @Patch('/:id/status')
-  updateBoardStatus(
-    @Param('id') id: number,
-    @Body('status', BoardStatusValidationPipe) status: BoardStatus,
-  ): Promise<Board> {
-    return this.boardsService.updateBoardStatus(id, status);
-  }
+  // @Patch('/:id/status')
+  // updateBoardStatus(
+  //   @Param('id') id: number,
+  //   @Body('status', BoardStatusValidationPipe) status: BoardStatus,
+  // ): Promise<Board> {
+  //   return this.boardsService.updateBoardStatus(id, status);
+  // }
 }

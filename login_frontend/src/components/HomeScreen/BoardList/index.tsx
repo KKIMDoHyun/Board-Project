@@ -17,7 +17,10 @@ const BoardData: FC<BoardProps> = ({item}) => {
 const BoardList: FC = () => {
   useFocusEffect(
     useCallback(() => {
-      BoardStore.fetchBoardList();
+      (async () => {
+        BoardStore.fetchBoardList();
+      })();
+      console.log(BoardStore.boardList);
     }, []),
   );
   return (
