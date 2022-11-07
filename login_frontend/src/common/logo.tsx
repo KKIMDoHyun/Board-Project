@@ -1,4 +1,3 @@
-import LoginButton from '@/components/SignInScreen/LoginButton';
 import {observer} from 'mobx-react';
 import React, {FC} from 'react';
 import {Text, View} from 'react-native';

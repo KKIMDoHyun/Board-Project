@@ -6,15 +6,14 @@
  * @flow strict-local
  */
 
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import BottomTabs from './common/BottomTabs';
+import BottomTabs from './common/bottomTabs';
 import BoardDetailScreen from './screens/BoardDetailScreen';
 import CreateBoardScreen from './screens/CreateBoardScreen';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import SplashScreen from './screens/SplashScreen';
 
 const Stack = createNativeStackNavigator();
